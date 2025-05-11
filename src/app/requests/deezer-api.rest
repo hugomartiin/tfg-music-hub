@@ -1,0 +1,26 @@
+### Buscar artista
+GET https://api.deezer.com/search/artist?q=daft+punk
+
+### Buscar álbum
+GET https://api.deezer.com/search/album?q=discovery
+
+### Buscar canción
+GET https://api.deezer.com/search/track?q=one+more+time
+
+### Info de artista por ID
+GET https://api.deezer.com/artist/27
+
+### Álbumes del artista
+GET https://api.deezer.com/artist/27/albums
+
+### Top canciones del artista
+GET https://api.deezer.com/artist/27/top
+
+### Artistas relacionados
+GET https://api.deezer.com/artist/27/related
+
+### Info de un álbum
+GET https://api.deezer.com/album/302127
+
+### Info de una canción (con preview)
+GET https://api.deezer.com/track/3135556

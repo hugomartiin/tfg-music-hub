@@ -1,0 +1,14 @@
+### Buscar artista
+GET https://api.discogs.com/database/search?type=artist&q=daft+punk&token=wERLsXgsndqSTZEDWaZhKlAOhObZIPgXxsHOwTLG
+
+### Buscar release física (vinilo, CD, etc)
+GET https://api.discogs.com/database/search?type=release&q=discovery&token=wERLsXgsndqSTZEDWaZhKlAOhObZIPgXxsHOwTLG
+
+### Info de artista por ID
+GET https://api.discogs.com/artists/3840
+
+### Releases del artista
+GET https://api.discogs.com/artists/3840/releases
+
+### Info de una release
+GET https://api.discogs.com/releases/249504
