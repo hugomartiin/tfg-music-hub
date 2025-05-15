@@ -1,42 +1,49 @@
-// src/app/services/deezer.service.ts
+// deezer.service.ts
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
+import {
+  DeezerArtistSearchResponse,
+  DeezerAlbumSearchResponse,
+  DeezerTrackSearchResponse,
+  DeezerArtist,
+  DeezerAlbumDetail,
+  DeezerTrack,
+} from '../interfaces/interfaces';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DeezerService {
-  private baseUrl = 'https://api.deezer.com';
-
   constructor(private http: HttpClient) {}
 
-  searchArtist(query: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/search/artist?q=${encodeURIComponent(query)}`);
+  search(query: string): Observable<{
+    artists: DeezerArtistSearchResponse;
+    albums: DeezerAlbumSearchResponse;
+    tracks: DeezerTrackSearchResponse;
+  }> {
+    const encoded = encodeURIComponent(query);
+    const searchArtists = this.http.get<DeezerArtistSearchResponse>(`/api/search/artist?q=${encoded}`);
+    const searchAlbums = this.http.get<DeezerAlbumSearchResponse>(`/api/search/album?q=${encoded}`);
+    const searchTracks = this.http.get<DeezerTrackSearchResponse>(`/api/search/track?q=${encoded}`);
+
+    return forkJoin({ artists: searchArtists, albums: searchAlbums, tracks: searchTracks });
   }
 
-  getArtist(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/artist/${id}`);
+  getArtist(id: number): Observable<DeezerArtist> {
+    return this.http.get<DeezerArtist>(`/api/artist/${id}`);
   }
 
-  getArtistAlbums(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/artist/${id}/albums`);
+  getArtistAlbums(id: number): Observable<DeezerAlbumSearchResponse> {
+    return this.http.get<DeezerAlbumSearchResponse>(`/api/artist/${id}/albums`);
   }
 
-  getTopTracks(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/artist/${id}/top`);
+  getAlbum(id: number): Observable<DeezerAlbumDetail> {
+    return this.http.get<DeezerAlbumDetail>(`/api/album/${id}`);
   }
 
-  searchAlbum(query: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/search/album?q=${encodeURIComponent(query)}`);
-  }
-
-  getAlbum(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/album/${id}`);
-  }
-
-  getTrack(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/track/${id}`);
+  getTrack(id: number): Observable<DeezerTrack> {
+    return this.http.get<DeezerTrack>(`/api/track/${id}`);
   }
 }

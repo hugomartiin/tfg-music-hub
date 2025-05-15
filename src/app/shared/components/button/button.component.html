@@ -1,0 +1,8 @@
+<button (click)="onClick()" [ngClass]="[
+    selected
+      ? 'bg-[#2f2f44] text-white border-[#4b4b66] shadow-lg'
+      : 'bg-[#14141f] text-gray-200 border-[#2e2e3e] hover:bg-[#26263a] hover:text-white hover:border-[#3a3a4f] hover:shadow-md',
+    'px-5 py-2 rounded-md font-medium transition-all duration-200'
+  ]" [className]="className">
+    {{ label }}
+</button>

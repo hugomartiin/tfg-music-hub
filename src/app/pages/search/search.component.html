@@ -1,1 +1,145 @@
-<p>search works!</p>
+<div class="bg-[#1f1f3a] min-h-screen">
+    <div class="p-6 max-w-6xl mx-auto">
+
+        <!-- Título -->
+        <h2 class="text-3xl font-extrabold mb-8 text-center text-white">
+            Resultados para: "<span class="italic">{{ query() }} </span>"
+        </h2>
+
+        <!-- Filtros -->
+        <div class="flex justify-center gap-6 mb-8">
+            <app-button label="Todo" value="all" [selected]="selectedCategory() === 'all'"
+                (click)="selectedCategory.set('all')" />
+
+            <app-button label="Artistas" value="artists" [selected]="selectedCategory() === 'artists'"
+                (click)="selectedCategory.set('artists')" />
+
+            <app-button label="Álbumes" value="albums" [selected]="selectedCategory() === 'albums'"
+                (click)="selectedCategory.set('albums')" />
+
+            <app-button label="Canciones" value="tracks" [selected]="selectedCategory() === 'tracks'"
+                (click)="selectedCategory.set('tracks')" />
+
+        </div>
+
+        <!-- Cargando -->
+        @if (loading()) {
+        <div class="text-center text-orange-500 text-xl font-semibold">Buscando...</div>
+        }
+
+        <!-- Error -->
+        @if (error()) {
+        <div class="text-center text-red-600 text-lg font-semibold">{{ error() }}</div>
+        }
+
+        <!-- Resultados -->
+        @if (results()) {
+        @switch (selectedCategory()) {
+
+        @case ('all') {
+        <!-- Artistas -->
+        @if (topArtists().length) {
+        <h3 class="text-2xl font-bold mb-4 text-white">Artistas</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            @for (artist of topArtists(); track artist.id) {
+            <a [routerLink]="['/artist', artist.id]"
+                class="group bg-white/20 backdrop-blur-md rounded-xl shadow-md p-4 flex flex-col items-center cursor-pointer hover:shadow-xl transition-shadow">
+                <img [src]="artist.picture_medium" alt="{{ artist.name }}"
+                    class="rounded-full w-28 h-28 object-cover mb-3 group-hover:scale-105 transition-transform" />
+                <p class="text-center text-lg font-semibold text-white group-hover:text-orange-400 truncate w-full">
+                    {{ artist.name }}
+                </p>
+            </a>
+            }
+        </div>
+        }
+
+        <!-- Álbumes -->
+        @if (topAlbums().length) {
+        <h3 class="text-2xl font-bold my-6 text-white">Álbumes</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            @for (album of topAlbums(); track album.id) {
+            <a [routerLink]="['/album', album.id]"
+                class="group bg-white/20 backdrop-blur-md rounded-xl shadow-md p-3 cursor-pointer hover:shadow-xl transition-shadow">
+                <img [src]="album.cover_medium" alt="{{ album.title }}"
+                    class="rounded w-full aspect-square object-cover mb-3 group-hover:scale-105 transition-transform" />
+                <p class="text-center font-semibold text-white group-hover:text-orange-400 truncate">
+                    {{ album.title }}
+                </p>
+            </a>
+            }
+        </div>
+        }
+
+        <!-- Canciones -->
+        @if (topTracks().length) {
+        <h3 class="text-2xl font-bold mt-8 mb-4 text-white">Canciones</h3>
+        <div class="divide-y divide-gray-600 border border-gray-700 rounded-lg bg-white/10 backdrop-blur-sm">
+            @for (track of topTracks(); track track.id) {
+            <div class="flex items-center gap-4 p-3 hover:bg-orange-900/40 cursor-pointer transition-colors"
+                [routerLink]="['/track', track.id]">
+                <img [src]="track.album.cover_small" alt="{{ track.title }}"
+                    class="w-14 h-14 rounded-lg object-cover" />
+                <div class="flex flex-col">
+                    <p class="font-semibold text-white">{{ track.title }}</p>
+                    <p class="text-sm text-gray-300">{{ track.artist.name }}</p>
+                </div>
+            </div>
+            }
+        </div>
+        }
+        }
+
+        @case ('artists') {
+        <h3 class="text-2xl font-bold mb-4 text-white">Artistas</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            @for (artist of topArtists(); track artist.id) {
+            <a [routerLink]="['/artist', artist.id]"
+                class="group bg-white/20 backdrop-blur-md rounded-xl shadow-md p-4 flex flex-col items-center cursor-pointer hover:shadow-xl transition-shadow">
+                <img [src]="artist.picture_medium" alt="{{ artist.name }}"
+                    class="rounded-full w-28 h-28 object-cover mb-3 group-hover:scale-105 transition-transform" />
+                <p class="text-center text-lg font-semibold text-white group-hover:text-orange-400 truncate w-full">
+                    {{ artist.name }}
+                </p>
+            </a>
+            }
+        </div>
+        }
+
+        @case ('albums') {
+        <h3 class="text-2xl font-bold mb-4 text-white">Álbumes</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            @for (album of topAlbums(); track album.id) {
+            <a [routerLink]="['/album', album.id]"
+                class="group bg-white/20 backdrop-blur-md rounded-xl shadow-md p-3 cursor-pointer hover:shadow-xl transition-shadow">
+                <img [src]="album.cover_medium" alt="{{ album.title }}"
+                    class="rounded w-full aspect-square object-cover mb-3 group-hover:scale-105 transition-transform" />
+                <p class="text-center font-semibold text-white group-hover:text-orange-400 truncate">
+                    {{ album.title }}
+                </p>
+            </a>
+            }
+        </div>
+        }
+
+        @case ('tracks') {
+        <h3 class="text-2xl font-bold mb-4 text-white">Canciones</h3>
+        <div class="divide-y divide-gray-600 border border-gray-700 rounded-lg bg-white/10 backdrop-blur-sm">
+            @for (track of topTracks(); track track.id) {
+            <div class="flex items-center gap-4 p-3 hover:bg-orange-900/40 cursor-pointer transition-colors"
+                [routerLink]="['/track', track.id]">
+                <img [src]="track.album.cover_small" alt="{{ track.title }}"
+                    class="w-14 h-14 rounded-lg object-cover" />
+                <div class="flex flex-col">
+                    <p class="font-semibold text-white">{{ track.title }}</p>
+                    <p class="text-sm text-gray-300">{{ track.artist.name }}</p>
+                </div>
+            </div>
+            }
+        </div>
+        }
+
+        }
+        }
+    </div>
+</div>

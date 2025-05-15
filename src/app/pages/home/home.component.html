@@ -1,1 +1,45 @@
-<p>home works!</p>
+<div class="relative min-h-screen bg-[#0e0e24] text-white overflow-hidden font-inter">
+
+    <!-- Hero background image  -->
+    <div class="absolute inset-0 z-0">
+        <img src="topography.svg" alt="Hero Background" class="w-full h-full object-cover opacity-10" />
+    </div>
+
+    <!-- Hero section -->
+    <section class="relative z-10 flex flex-col justify-center items-center text-center py-14 px-4" data-aos="fade-up">
+
+        <a [routerLink]="'/'" class="transition-transform hover:scale-105 mb-10">
+            <img src="logo-musichub.png" alt="MusicHub Logo" class="h-20 md:h-28 object-contain drop-shadow-xl" />
+        </a>
+
+        <h1
+            class="text-5xl md:text-7xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-[#a855f7] to-[#f97316]">
+            Explora tu mundo musical
+        </h1>
+
+        <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-xl">
+            Busca artistas, álbumes y descubre ediciones físicas con Discogs y Deezer.
+        </p>
+
+        <div class="w-full md:w-auto">
+            <app-search-bar (search)="onSearch($event)"></app-search-bar>
+        </div>
+    </section>
+
+    <!-- Sección de tarjetas -->
+    <section class="relative z-10 py-20 px-6 bg-[#12122a] rounded-t-3xl shadow-inner" data-aos="fade-up"
+        data-aos-delay="200">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+            <app-main-card title="Artistas" description="Encuentra información completa de tus artistas favoritos."
+                hoverColor="purple-400"></app-main-card>
+
+            <app-main-card title="Álbumes" description="Consulta álbumes populares y sus versiones físicas."
+                hoverColor="cyan-400"></app-main-card>
+
+            <app-main-card title="Favoritos" description="Próximamente: guarda tus favoritos y crea playlists."
+                hoverColor="orange-400"></app-main-card>
+        </div>
+    </section>
+
+
+</div>

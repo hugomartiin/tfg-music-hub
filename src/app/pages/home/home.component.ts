@@ -1,11 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { SearchBarComponent } from '../../shared/components/search-bar/search-bar.component';
+import { MainCardComponent } from '../../shared/components/main-card/main-card.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  imports: [SearchBarComponent, MainCardComponent, CommonModule, RouterLink
+],
 })
 export class HomeComponent {
+  constructor(private router: Router) {}
 
+  
+  onSearch(query: string) {
+    this.router.navigate(['/search'], { queryParams: { q: query } });
+  }
 }

@@ -1,1 +1,12 @@
-<p>header works!</p>
+@if (!isHome()) {
+<header class="w-full py-5 px-6 text-white shadow-md backdrop-blur-md bg-[#0e0e24] bg-opacity-95 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <a [routerLink]="'/'" class="transition-transform hover:scale-105">
+            <img src="logo-musichub.png" alt="MusicHub Logo" class="h-12 md:h-16 object-contain" />
+        </a>
+        <div class="w-full max-w-sm ml-4">
+            <app-search-bar (search)="onSearch($event)"></app-search-bar>
+        </div>
+    </div>
+</header>
+}
