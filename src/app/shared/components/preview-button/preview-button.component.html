@@ -1,0 +1,19 @@
+<button (click)="togglePlayback()"
+    class="bg-orange-500 hover:bg-orange-600 text-white rounded-full p-3 shadow-md transition-all duration-300 flex items-center justify-center"
+    [title]="isPlaying() ? 'Pausar preview' : 'Reproducir preview'">
+    @if (!isPlaying()) {
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 transform scale-x-110" fill="currentColor"
+        viewBox="0 0 24 24">
+        <path d="M8 5v14l11-7z" />
+    </svg>
+    }
+
+    @if (isPlaying()) {
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
+        <g>
+            <rect x="6" y="5" width="4" height="14" rx="1" />
+            <rect x="14" y="5" width="4" height="14" rx="1" />
+        </g>
+    </svg>
+    }
+</button>

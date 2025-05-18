@@ -1,1 +1,102 @@
-<p>artist works!</p>
+<div class="bg-[#1f1f3a] min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 py-6">
+        @if (loading()) {
+        <div class="text-center text-white">Cargando artista...</div>
+        } @else if (artist() || discogsArtist()) {
+        <div class="flex flex-col md:flex-row items-center gap-4">
+            <img [src]="artist()?.picture_medium || discogsArtist()?.images?.[0]?.uri"
+                [alt]="artist()?.name || discogsArtist()?.name" class="rounded-full w-40 h-40 object-cover" />
+
+            <div class="text-center md:text-left">
+                <h1 class="text-4xl text-white font-bold">
+                    {{ artist()?.name || discogsArtist()?.name }}
+                </h1>
+
+                @if (artist()) {
+                <p class="text-sm text-gray-400">
+                    {{ artist()?.nb_album }} álbumes y singles ·
+                    {{ artist()?.nb_fan | number }} fans
+                </p>
+                }
+
+                @if (discogsArtist()) {
+                <div class="mt-4 text-sm text-gray-300">
+                    @if (cleanProfile) {
+                    <div class="mt-2 text-gray-300">
+                        <span class="text-white font-semibold">Biografía: </span>
+                        <span>{{ truncatedProfile }}</span>
+
+                        @if (isTruncatedProfile) {
+                        <button (click)="toggleExpanded()" class="ml-2 text-blue-400 hover:underline">
+                            {{ isExpanded() ? 'Leer menos' : 'Leer más' }}
+                        </button>
+                        }
+                    </div>
+                    }
+                    @if (discogsArtist()?.namevariations?.length) {
+                    <div class="mt-2 text-gray-300">
+                        <span class="text-white font-semibold">También conocido como: </span>
+                        {{ truncatedNameVariations }}
+
+                        @if (isTruncatedNameVariations) {
+                        <button (click)="toggleNameVariations()" class="ml-2 text-blue-400 hover:underline">
+                            {{ isNameVariationsExpanded() ? 'Leer menos' : 'Leer más' }}
+                        </button>
+                        }
+                    </div>
+                    }
+                    @if (discogsMemberNames) {
+                    <p class="mt-2">
+                        <span class="text-white font-semibold">Miembros: </span>
+                        {{ discogsMemberNames }}
+                    </p>
+                    }
+                </div>
+                }
+            </div>
+        </div>
+
+        <!-- Álbumes -->
+        <h2 class="text-2xl text-white mt-8 mb-4">Álbumes</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+            @for (album of albums()?.slice(0, visibleCount()) ?? []; track album.id) {
+            <a [routerLink]="['/album', album.id]"
+                class="group bg-white/10 rounded-xl p-4 text-white hover:shadow-xl transition duration-300 flex flex-col items-center">
+                <div class="w-full h-[240px] overflow-hidden rounded-lg">
+                    <img [src]="album.cover_medium" [alt]="album.title"
+                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                </div>
+
+                <p class="mt-3 text-center font-semibold group-hover:text-orange-400 truncate w-full">
+                    {{ album.title }}
+                </p>
+            </a>
+            }
+        </div>
+
+
+        <div class="mt-6 text-center">
+            @if ((albums()?.length ?? 0) > 6) {
+            @if ((albums()?.length ?? 0) > visibleCount()) {
+            <app-button label="Ver más" (click)="showMore()" />
+            } @else {
+            <app-button label="Ver menos" (click)="showLess()" />
+            }
+            }
+
+        </div>
+        }
+        <!--Enlaces-->
+        @if (discogsArtist()?.urls?.length) {
+        <div class="mt-8 p-4 border-t border-gray-600 text-blue-400 max-w-6xl mx-auto">
+            <span class="text-white font-semibold">Enlaces:</span>
+            @for (url of discogsArtist()?.urls; track url) {
+            <a [href]="url" target="_blank" class="underline ml-1 hover:text-blue-300 break-all block">
+                {{ url }}
+            </a>
+            }
+        </div>
+        }
+
+    </div>
+</div>

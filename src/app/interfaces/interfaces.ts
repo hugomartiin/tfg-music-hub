@@ -77,3 +77,104 @@ export interface DeezerAlbumDetail extends DeezerAlbum {
 export interface DeezerArtistDetail extends DeezerArtist {
   albums?: DeezerAlbum[];
 }
+
+export interface DiscogsSearchResult {
+  pagination: {
+    items: number;
+    page: number;
+    pages: number;
+    per_page: number;
+  };
+  results: DiscogsSearchItem[];
+}
+
+export interface DiscogsSearchItem {
+  id: number;
+  type: string;
+  title: string;
+  thumb: string;
+  resource_url: string;
+}
+
+export interface DiscogsArtistReleases {
+  pagination: {
+    items: number;
+    page: number;
+    pages: number;
+    per_page: number;
+  };
+  releases: DiscogsRelease[];
+}
+
+export interface DiscogsRelease {
+  id: number;
+  title: string;
+  year: number;
+  format: string[];
+  label: string[];
+  type: string;
+  role: string;
+  thumb: string;
+  resource_url: string;
+}
+export interface DiscogsArtist {
+  id: number;
+  name: string;
+  resource_url: string;
+  uri: string;
+  releases_url: string;
+  profile: string;
+  data_quality: string;
+  images: DiscogsImage[];
+  urls: string[];
+  namevariations: string[];
+  aliases: DiscogsAlias[];
+  members: DiscogsMember[];
+}
+
+export interface DiscogsImage {
+  type: string;
+  uri: string;
+  resource_url: string;
+  uri150: string;
+  width: number;
+  height: number;
+}
+
+export interface DiscogsAlias {
+  id: number;
+  name: string;
+  resource_url: string;
+}
+
+export interface DiscogsMember {
+  id: number;
+  name: string;
+  resource_url: string;
+  active: boolean;
+}
+
+export interface DiscogsReleaseDetail {
+  id: number;
+  title: string;
+  year: number;
+  format: string[];
+  label: string[];
+  type: string;
+  role: string;
+  thumb: string;
+  resource_url: string;
+  artists: {
+    id: number;
+    name: string;
+    resource_url: string;
+    role?: string;
+  }[];
+  images?: {
+    uri: string;
+    uri150: string;
+    width: number;
+    height: number;
+    type: string;
+  }[];
+}

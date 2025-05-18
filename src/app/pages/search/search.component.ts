@@ -4,6 +4,7 @@ import { DeezerService } from '../../services/deezer.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { ButtonComponent } from '../../shared/components/button/button.component';
+import { PreviewButtonComponent } from '../../shared/components/preview-button/preview-button.component';
 
 @Component({
   selector: 'app-search',
@@ -11,7 +12,8 @@ import { ButtonComponent } from '../../shared/components/button/button.component
   standalone: true,
   imports: [
     RouterModule,
-    ButtonComponent
+    ButtonComponent,
+    PreviewButtonComponent,
   ],
 })
 export class SearchComponent {

@@ -1,5 +1,5 @@
 <div class="bg-[#1f1f3a] min-h-screen">
-    <div class="p-6 max-w-6xl mx-auto">
+    <div class="max-w-7xl mx-auto px-4 py-6">
 
         <!-- Título -->
         <h2 class="text-3xl font-extrabold mb-8 text-center text-white">
@@ -10,16 +10,12 @@
         <div class="flex justify-center gap-6 mb-8">
             <app-button label="Todo" value="all" [selected]="selectedCategory() === 'all'"
                 (click)="selectedCategory.set('all')" />
-
             <app-button label="Artistas" value="artists" [selected]="selectedCategory() === 'artists'"
                 (click)="selectedCategory.set('artists')" />
-
             <app-button label="Álbumes" value="albums" [selected]="selectedCategory() === 'albums'"
                 (click)="selectedCategory.set('albums')" />
-
             <app-button label="Canciones" value="tracks" [selected]="selectedCategory() === 'tracks'"
                 (click)="selectedCategory.set('tracks')" />
-
         </div>
 
         <!-- Cargando -->
@@ -76,14 +72,21 @@
         <h3 class="text-2xl font-bold mt-8 mb-4 text-white">Canciones</h3>
         <div class="divide-y divide-gray-600 border border-gray-700 rounded-lg bg-white/10 backdrop-blur-sm">
             @for (track of topTracks(); track track.id) {
-            <div class="flex items-center gap-4 p-3 hover:bg-orange-900/40 cursor-pointer transition-colors"
-                [routerLink]="['/track', track.id]">
-                <img [src]="track.album.cover_small" alt="{{ track.title }}"
-                    class="w-14 h-14 rounded-lg object-cover" />
-                <div class="flex flex-col">
-                    <p class="font-semibold text-white">{{ track.title }}</p>
-                    <p class="text-sm text-gray-300">{{ track.artist.name }}</p>
+            <div class="flex items-center justify-between gap-4 p-3 hover:bg-orange-900/40 transition-colors rounded">
+
+                <!-- Contenido clicable -->
+                <div class="flex items-center gap-4 flex-1 cursor-pointer" [routerLink]="['/track', track.id]">
+                    <img [src]="track.album.cover_small" alt="{{ track.title }}"
+                        class="w-14 h-14 rounded-lg object-cover" />
+                    <div class="flex flex-col">
+                        <p class="font-semibold text-white">{{ track.title }}</p>
+                        <p class="text-sm text-gray-300">{{ track.artist.name }}</p>
+                    </div>
                 </div>
+
+                <!-- Botón preview -->
+                <app-preview-button [previewUrl]="track.preview"></app-preview-button>
+
             </div>
             }
         </div>
@@ -126,14 +129,21 @@
         <h3 class="text-2xl font-bold mb-4 text-white">Canciones</h3>
         <div class="divide-y divide-gray-600 border border-gray-700 rounded-lg bg-white/10 backdrop-blur-sm">
             @for (track of topTracks(); track track.id) {
-            <div class="flex items-center gap-4 p-3 hover:bg-orange-900/40 cursor-pointer transition-colors"
-                [routerLink]="['/track', track.id]">
-                <img [src]="track.album.cover_small" alt="{{ track.title }}"
-                    class="w-14 h-14 rounded-lg object-cover" />
-                <div class="flex flex-col">
-                    <p class="font-semibold text-white">{{ track.title }}</p>
-                    <p class="text-sm text-gray-300">{{ track.artist.name }}</p>
+            <div class="flex items-center justify-between gap-4 p-3 hover:bg-orange-900/40 transition-colors rounded">
+
+                <!-- Contenido clicable -->
+                <div class="flex items-center gap-4 flex-1 cursor-pointer" [routerLink]="['/track', track.id]">
+                    <img [src]="track.album.cover_small" alt="{{ track.title }}"
+                        class="w-14 h-14 rounded-lg object-cover" />
+                    <div class="flex flex-col">
+                        <p class="font-semibold text-white">{{ track.title }}</p>
+                        <p class="text-sm text-gray-300">{{ track.artist.name }}</p>
+                    </div>
                 </div>
+
+                <!-- Botón preview -->
+                <app-preview-button [previewUrl]="track.preview"></app-preview-button>
+
             </div>
             }
         </div>

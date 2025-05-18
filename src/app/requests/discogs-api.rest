@@ -5,7 +5,7 @@ GET https://api.discogs.com/database/search?type=artist&q=daft+punk&token=wERLsX
 GET https://api.discogs.com/database/search?type=release&q=discovery&token=wERLsXgsndqSTZEDWaZhKlAOhObZIPgXxsHOwTLG
 
 ### Info de artista por ID
-GET https://api.discogs.com/artists/3840
+GET https://api.discogs.com/artist?q=anuel
 
 ### Releases del artista
 GET https://api.discogs.com/artists/3840/releases
