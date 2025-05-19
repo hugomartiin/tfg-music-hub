@@ -1,13 +1,11 @@
 <div class="relative min-h-screen bg-[#0e0e24] text-white overflow-hidden font-inter">
-
-    <!-- Hero background image  -->
+    <!-- Hero background image -->
     <div class="absolute inset-0 z-0">
         <img src="topography.svg" alt="Hero Background" class="w-full h-full object-cover opacity-10" />
     </div>
 
     <!-- Hero section -->
     <section class="relative z-10 flex flex-col justify-center items-center text-center py-14 px-4" data-aos="fade-up">
-
         <a [routerLink]="'/'" class="transition-transform hover:scale-105 mb-10">
             <img src="logo-musichub.png" alt="MusicHub Logo" class="h-20 md:h-28 object-contain drop-shadow-xl" />
         </a>
@@ -21,8 +19,31 @@
             Busca artistas, álbumes y descubre ediciones físicas con Discogs y Deezer.
         </p>
 
+        <!-- Barra de búsqueda -->
         <div class="w-full md:w-auto">
-            <app-search-bar (search)="onSearch($event)"></app-search-bar>
+            <app-search-bar (search)="onSearch($event)" (queryChange)="onQueryChange($event)"></app-search-bar>
+
+            <!-- Resultados -->
+            <div *ngIf="topResults.length" class="mt-4 space-y-2 text-left max-w-md mx-auto">
+                <h3 class="text-lg text-gray-400">Resultados principales:</h3>
+
+                <div *ngFor="let item of topResults" (click)="goToDetail(item)"
+                    class="bg-white/10 hover:bg-white/20 rounded-lg p-3 flex items-center gap-4 transition cursor-pointer">
+
+
+                    <!-- Imagen -->
+                    <img [src]="getImage(item)" alt="{{ getTitle(item) }}" class="w-12 h-12 rounded" />
+
+                    <div class="flex-1 min-w-0">
+                        <p class="text-white font-semibold truncate">{{ getTitle(item) }}</p>
+                        <p class="text-sm text-gray-400 truncate" *ngIf="getSubtitle(item)">{{ getSubtitle(item) }}</p>
+                    </div>
+
+                    <div *ngIf="isTrack(item)" (click)="$event.stopPropagation()">
+                        <app-preview-button [previewUrl]="item.preview"></app-preview-button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -40,6 +61,4 @@
                 hoverColor="orange-400"></app-main-card>
         </div>
     </section>
-
-
 </div>

@@ -1,4 +1,3 @@
-// src/app/shared/components/preview-button/preview-button.component.ts
 import { Component, Input } from '@angular/core';
 import { AudioPlayerService } from '../../../services/audio.service';
 
@@ -21,5 +20,10 @@ export class PreviewButtonComponent {
     } else {
       this.audioPlayerService.play(this.previewUrl);
     }
+  }
+
+  onButtonClick(event: MouseEvent) {
+    event.stopPropagation();
+    this.togglePlayback();
   }
 }

@@ -1,20 +1,79 @@
-import { Component, } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { debounceTime, Subject } from 'rxjs';
+import { DeezerService } from '../../services/deezer.service';
 import { SearchBarComponent } from '../../shared/components/search-bar/search-bar.component';
 import { MainCardComponent } from '../../shared/components/main-card/main-card.component';
-import { CommonModule } from '@angular/common';
+import { PreviewButtonComponent } from '../../shared/components/preview-button/preview-button.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  imports: [SearchBarComponent, MainCardComponent, CommonModule, RouterLink
-],
+  standalone: true,
+  imports: [
+    SearchBarComponent,
+    MainCardComponent,
+    CommonModule,
+    RouterLink,
+    PreviewButtonComponent
+  ],
 })
 export class HomeComponent {
-  constructor(private router: Router) {}
+  topResults: any[] = [];
+  private query$ = new Subject<string>();
 
-  
+  constructor(private router: Router, private deezerService: DeezerService) {
+    this.query$.pipe(debounceTime(300)).subscribe((query) => {
+      if (!query) {
+        this.topResults = [];
+        return;
+      }
+
+      this.deezerService.search(query).subscribe((res) => {
+        const topTracks = res.tracks.data.slice(0, 2);
+        const topArtists = res.artists.data.slice(0, 2);
+        const topAlbums = res.albums.data.slice(0, 1);
+        this.topResults = [...topArtists, ...topAlbums, ...topTracks];
+      });
+    });
+  }
+
   onSearch(query: string) {
     this.router.navigate(['/search'], { queryParams: { q: query } });
   }
+
+  onQueryChange(query: string) {
+    this.query$.next(query);
+  }
+
+  isTrack(item: any): boolean {
+    return !!item.preview;
+  }
+
+  getImage(item: any): string {
+    if (item.picture_small) return item.picture_small;
+    if (item.cover_small) return item.cover_small;   
+    if (item.album?.cover_small) return item.album.cover_small; //
+    return '';
+  }
+
+  getTitle(item: any): string {
+    return item.title || item.name;
+  }
+
+  getSubtitle(item: any): string {
+    if (item.artist) return item.artist.name;
+    if (item.type === 'album') return 'Álbum';
+    if (item.type === 'artist') return 'Artista';
+    return '';
+  }
+  goToDetail(item: any) {
+  if (item.type === 'artist') {
+    this.router.navigate(['/artist', item.id]);
+  } else if (item.type === 'album') {
+    this.router.navigate(['/album', item.id]);
+  }
+}
+
 }

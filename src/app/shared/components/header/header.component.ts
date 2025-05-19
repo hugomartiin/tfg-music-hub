@@ -2,11 +2,12 @@ import { Component, signal } from '@angular/core';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
+import { LiveSearchComponent } from '../live-search/live-search.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule, SearchBarComponent],
+  imports: [CommonModule, RouterModule, SearchBarComponent,LiveSearchComponent],
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {

@@ -59,7 +59,7 @@
         <!-- top canciones -->
         @if (topTracks()?.length) {
         <h2 class="text-2xl text-white mt-8 mb-4">Top Canciones</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 z-0">
             @for (track of topTracks(); track track.id) {
             <div class="bg-white/10 rounded-xl p-4 flex gap-4 items-center hover:shadow-lg transition">
                 <img [src]="track.album.cover_small" [alt]="track.title" class="w-16 h-16 rounded" />
@@ -71,7 +71,7 @@
                         {{ (track.duration / 60) | number:'1.0-0' }} min
                     </span>
                 </div>
-                <app-preview-button [previewUrl]="track.preview"></app-preview-button>
+                <app-preview-button class="z-0" [previewUrl]="track.preview"></app-preview-button>
             </div>
             }
         </div>

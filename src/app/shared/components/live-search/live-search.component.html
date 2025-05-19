@@ -1,0 +1,27 @@
+<div class="w-full md:w-auto relative z-50">
+    <app-search-bar [(model)]="searchValue" (search)="onSearch($event)"
+        (queryChange)="onQueryChange($event)"></app-search-bar>
+
+    <!-- Resultados -->
+    <div *ngIf="topResults.length"
+        class="absolute top-full left-0 bg-[#1e1e2f] shadow-xl mt-2 rounded-lg w-full max-w-md space-y-2 p-3 z-50">
+
+        <h3 class="text-sm text-gray-400 px-1">Resultados principales:</h3>
+
+        <div *ngFor="let item of topResults" (click)="handleResultClick(item)"
+            class="bg-white/10 hover:bg-white/20 rounded-lg p-2 flex items-center gap-3 transition cursor-pointer relative">
+
+            <img [src]="getImage(item)" alt="{{ getTitle(item) }}" class="w-10 h-10 rounded" />
+
+            <div class="flex-1 min-w-0">
+                <p class="text-white text-sm font-medium truncate">{{ getTitle(item) }}</p>
+                <p class="text-xs text-gray-400 truncate" *ngIf="getSubtitle(item)">{{ getSubtitle(item) }}</p>
+            </div>
+
+            <div *ngIf="isTrack(item)" (click)="$event.stopPropagation()">
+                <app-preview-button [previewUrl]="item.preview"></app-preview-button>
+            </div>
+
+        </div>
+    </div>
+</div>

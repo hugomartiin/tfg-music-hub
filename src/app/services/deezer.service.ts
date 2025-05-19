@@ -16,6 +16,11 @@ import {
   providedIn: 'root',
 })
 export class DeezerService {
+searchTracks(query: string): Observable<DeezerTrackSearchResponse> {
+  const encoded = encodeURIComponent(query);
+  return this.http.get<DeezerTrackSearchResponse>(`/api/search/track?q=${encoded}`);
+}
+
   constructor(private http: HttpClient) {}
 
   search(query: string): Observable<{
