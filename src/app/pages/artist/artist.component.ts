@@ -3,13 +3,14 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DeezerService } from '../../services/deezer.service';
 import { DiscogsService } from '../../services/discogs.service';
-import { DeezerArtist, DeezerAlbum, DiscogsArtist, DiscogsArtistReleases, DiscogsSearchResult } from '../../interfaces/interfaces';
+import { DeezerArtist, DeezerAlbum, DiscogsArtist, DiscogsArtistReleases, DiscogsSearchResult,DeezerTrack } from '../../interfaces/interfaces';
 import { ButtonComponent } from '../../shared/components/button/button.component';
+import { PreviewButtonComponent } from '../../shared/components/preview-button/preview-button.component';
 
 @Component({
   selector: 'app-artist',
   templateUrl: './artist.component.html',
-  imports: [RouterLink, CommonModule, ButtonComponent],
+  imports: [RouterLink, CommonModule, ButtonComponent,PreviewButtonComponent],
 })
 export class ArtistComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -22,7 +23,7 @@ export class ArtistComponent implements OnInit {
   visibleCount = signal(8);
   isExpanded = signal(false);
   isNameVariationsExpanded = signal(false);
-
+  topTracks = signal<DeezerTrack[]>([]); 
   discogsArtist = signal<DiscogsArtist | null>(null);
   artistReleases = signal<DiscogsArtistReleases | null>(null);
   
@@ -50,13 +51,23 @@ get isTruncatedNameVariations(): boolean {
   const joined = (this.discogsArtist()?.namevariations ?? []).join(', ');
   return joined.length > 150;
 }
-  ngOnInit(): void {
-    const id = +this.route.snapshot.paramMap.get('id')!;
+ngOnInit(): void {
+  const id = +this.route.snapshot.paramMap.get('id')!;
+  this.deezerService.getArtist(id).subscribe((res) => {
+    this.artist.set(res);
+    const name = res?.name ?? '';
 
-    this.deezerService.getArtist(id).subscribe((res) => {
-      this.artist.set(res);
+    this.deezerService.getArtistAlbums(id).subscribe((res) => {
+      this.albums.set(res.data);
+      this.loading.set(false);
+    });
 
-      this.discogsService.searchArtist(res.name).subscribe((search: DiscogsSearchResult) => {
+    this.deezerService.getArtistTopTracks(id).subscribe((res) => {
+      this.topTracks.set(res.data);
+    });
+
+    if (name) {
+      this.discogsService.searchArtist(name).subscribe((search: DiscogsSearchResult) => {
         const match = search.results[0];
         if (match) {
           this.discogsService.getArtistById(match.id).subscribe((artistInfo) => {
@@ -67,13 +78,9 @@ get isTruncatedNameVariations(): boolean {
           });
         }
       });
-    });
-
-    this.deezerService.getArtistAlbums(id).subscribe((res) => {
-      this.albums.set(res.data);
-      this.loading.set(false);
-    });
-  }
+    }
+  });
+}
 
   showMore(): void {
     this.visibleCount.set(this.albums().length);

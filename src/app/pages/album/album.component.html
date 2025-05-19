@@ -1,1 +1,56 @@
-<p>album works!</p>
+<!-- cargando álbum -->
+@if (isLoading) {
+<div class="text-white text-center mt-10 text-lg">Cargando álbum...</div>
+}
+
+<!--mostrar álbum -->
+@if (!isLoading && album) {
+<div class="bg-gradient-to-b from-[#1f1f3a] to-[#0f0f1e] min-h-screen text-white">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+
+        <!--cbecera del álbum -->
+        <div class="flex flex-col md:flex-row items-center md:items-end gap-6">
+            <img [src]="album.cover_xl" [alt]="album.title" class="w-56 h-56 rounded-xl shadow-lg object-cover" />
+            <div>
+                <p class="uppercase text-sm text-gray-300 font-semibold">Álbum</p>
+                <h1 class="text-4xl md:text-5xl font-bold mt-1">{{ album.title }}</h1>
+                <p class="text-lg text-orange-400 mt-2">{{ album.artist.name }}</p>
+                <p class="text-sm text-gray-400 mt-1">
+                    Publicado: {{ album.release_date }}
+                    @if (album.label) {
+                    <span> • {{ album.label }}</span>
+                    }
+                </p>
+            </div>
+        </div>
+
+        <!--lista de canciones -->
+        <div class="mt-12">
+            <h2 class="text-2xl font-semibold mb-4">Lista de canciones</h2>
+            <div class="divide-y divide-gray-700">
+                <div *ngFor="let track of album.tracks.data; let i = index"
+                    class="py-3 flex items-center gap-4 group hover:bg-white/10 px-2 rounded">
+
+                    <span class="w-6 text-right text-sm text-gray-400">{{ i + 1 }}</span>
+
+                    <div class="flex-1 min-w-0 flex flex-col justify-center">
+                        <p class="text-white font-semibold truncate">
+                            {{ track.title }}
+                        </p>
+                        <p class="text-xs text-gray-400 truncate">
+                            {{ track.artist.name }}
+                        </p>
+                    </div>
+
+                    <span class="text-sm text-gray-400 w-16 text-right">
+                        {{ (track.duration / 60) | number:'1.0-0' }} min
+                    </span>
+
+                    <app-preview-button [previewUrl]="track.preview" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+}

@@ -1,5 +1,3 @@
-// interfaces.ts
-
 export interface DeezerArtistSearchResponse {
   data: DeezerArtist[];
   total?: number;
@@ -18,10 +16,18 @@ export interface DeezerTrackSearchResponse {
   next?: string;
 }
 
+export interface DeezerGenre {
+  id: number;
+  name: string;
+  picture: string;
+  type: string;
+}
+
 export interface DeezerArtist {
   id: number;
   name: string;
   link: string;
+  share: string;
   picture: string;
   picture_small: string;
   picture_medium: string;
@@ -31,25 +37,6 @@ export interface DeezerArtist {
   nb_fan: number;
   radio: boolean;
   tracklist: string;
-  type: 'artist';
-}
-
-export interface DeezerAlbum {
-  id: number;
-  title: string;
-  link: string;
-  cover: string;
-  cover_small: string;
-  cover_medium: string;
-  cover_big: string;
-  cover_xl: string;
-  md5_image: string;
-  genre_id: number;
-  nb_tracks: number;
-  record_type: string;
-  tracklist: string;
-  explicit_lyrics: boolean;
-  artist: DeezerArtist;
   type: string;
 }
 
@@ -59,16 +46,92 @@ export interface DeezerTrack {
   title: string;
   title_short: string;
   title_version: string;
+  link: string;
   duration: number;
   rank: number;
   explicit_lyrics: boolean;
   preview: string;
-  artist: DeezerArtist;
-  album: DeezerAlbum;
+  artist: {
+    id: number;
+    name: string;
+  };
+  album: {
+    id: number;
+    title: string;
+    cover: string;
+    cover_small: string;
+    cover_medium: string;
+    cover_big: string;
+    cover_xl: string;
+  };
+  type: string;
+  track_position?: number; 
+}
+
+export interface DeezerContributor {
+  id: number;
+  name: string;
+  link: string;
+  share: string;
+  picture: string;
+  picture_small: string;
+  picture_medium: string;
+  picture_big: string;
+  picture_xl: string;
+  radio: boolean;
+  tracklist: string;
+  type: string;
+  role: string;
+}
+
+export interface DeezerAlbum {
+  id: number;
+  title: string;
+  upc: string;
+  link: string;
+  share: string;
+  cover: string;
+  cover_small: string;
+  cover_medium: string;
+  cover_big: string;
+  cover_xl: string;
+  md5_image: string;
+  genre_id: number;
+  genres: { data: DeezerGenre[] };
+  label: string;
+  nb_tracks: number;
+  duration: number;
+  fans: number;
+  release_date: string;
+  record_type: string;
+  available: boolean;
+  alternative?: DeezerAlbum;
+  tracklist: string;
+  explicit_lyrics: boolean;
+  explicit_content_lyrics: number;
+  explicit_content_cover: number;
+  contributors: DeezerContributor[];
+  fallback?: {
+    id: number;
+    status: string;
+  };
+  artist: {
+    id: number;
+    name: string;
+    picture: string;
+    picture_small: string;
+    picture_medium: string;
+    picture_big: string;
+    picture_xl: string;
+  };
+  tracks: {
+    data: DeezerTrack[];
+  };
   type: string;
 }
 
 export interface DeezerAlbumDetail extends DeezerAlbum {
+release_date: any;
   tracks: {
     data: DeezerTrack[];
   };
@@ -110,13 +173,16 @@ export interface DiscogsRelease {
   id: number;
   title: string;
   year: number;
-  format: string[];
+  format: string | string[]; 
   label: string[];
   type: string;
   role: string;
   thumb: string;
   resource_url: string;
+  status?: string;
+
 }
+
 export interface DiscogsArtist {
   id: number;
   name: string;

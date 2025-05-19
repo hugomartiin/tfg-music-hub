@@ -45,6 +45,7 @@
                         }
                     </div>
                     }
+
                     @if (discogsMemberNames) {
                     <p class="mt-2">
                         <span class="text-white font-semibold">Miembros: </span>
@@ -55,10 +56,30 @@
                 }
             </div>
         </div>
+        <!-- top canciones -->
+        @if (topTracks()?.length) {
+        <h2 class="text-2xl text-white mt-8 mb-4">Top Canciones</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            @for (track of topTracks(); track track.id) {
+            <div class="bg-white/10 rounded-xl p-4 flex gap-4 items-center hover:shadow-lg transition">
+                <img [src]="track.album.cover_small" [alt]="track.title" class="w-16 h-16 rounded" />
+                <div class="flex-1 min-w-0">
+                    <p class="text-white font-semibold truncate">
+                        {{ track.title }}
+                    </p>
+                    <span class="text-sm text-gray-400 w-16 text-right">
+                        {{ (track.duration / 60) | number:'1.0-0' }} min
+                    </span>
+                </div>
+                <app-preview-button [previewUrl]="track.preview"></app-preview-button>
+            </div>
+            }
+        </div>
+        }
 
-        <!-- Álbumes -->
+        <!-- albumes -->
         <h2 class="text-2xl text-white mt-8 mb-4">Álbumes</h2>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-6">
             @for (album of albums()?.slice(0, visibleCount()) ?? []; track album.id) {
             <a [routerLink]="['/album', album.id]"
                 class="group bg-white/10 rounded-xl p-4 text-white hover:shadow-xl transition duration-300 flex flex-col items-center">
@@ -86,7 +107,7 @@
 
         </div>
         }
-        <!--Enlaces-->
+        <!-- enlaces-->
         @if (discogsArtist()?.urls?.length) {
         <div class="mt-8 p-4 border-t border-gray-600 text-blue-400 max-w-6xl mx-auto">
             <span class="text-white font-semibold">Enlaces:</span>
