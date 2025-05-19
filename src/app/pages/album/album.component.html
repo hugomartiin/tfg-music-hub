@@ -1,13 +1,8 @@
-<!-- cargando álbum -->
-@if (isLoading) {
-<div class="text-white text-center mt-10 text-lg">Cargando álbum...</div>
-}
-
-<!--mostrar álbum -->
-@if (!isLoading && album) {
 <div class="bg-gradient-to-b from-[#1f1f3a] to-[#0f0f1e] min-h-screen text-white">
     <div class="max-w-6xl mx-auto px-6 py-10">
-
+        @if (isLoading) {
+        <div class="text-center text-white">Cargando álbum...</div>
+        } @else if (album) {
         <!--cbecera del álbum -->
         <div class="flex flex-col md:flex-row items-center md:items-end gap-6">
             <img [src]="album.cover_xl" [alt]="album.title" class="w-56 h-56 rounded-xl shadow-lg object-cover" />
@@ -48,9 +43,8 @@
 
                     <app-preview-button [previewUrl]="track.preview" />
                 </div>
-
             </div>
         </div>
+        }
     </div>
 </div>
-}

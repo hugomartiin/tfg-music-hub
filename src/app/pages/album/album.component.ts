@@ -9,7 +9,6 @@ import { PreviewButtonComponent } from '../../shared/components/preview-button/p
 @Component({
   selector: 'app-album',
   templateUrl: './album.component.html',
-  styleUrls: ['./album.component.css'],
   imports: [CommonModule, PreviewButtonComponent],
   standalone: true
 })
