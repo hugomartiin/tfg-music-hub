@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, RouterLink } from '@angular/router';
 import { DeezerService } from '../../services/deezer.service';
 import { DeezerAlbumDetail, DiscogsRelease } from '../../interfaces/interfaces';
 import { CommonModule } from '@angular/common';
@@ -8,7 +8,7 @@ import { PreviewButtonComponent } from '../../shared/components/preview-button/p
 @Component({
   selector: 'app-album',
   templateUrl: './album.component.html',
-  imports: [CommonModule, PreviewButtonComponent],
+  imports: [CommonModule, PreviewButtonComponent,RouterLink],
   standalone: true
 })
 export class AlbumComponent implements OnInit {

@@ -1,7 +1,6 @@
 <button (click)="onButtonClick($event)"
     class="bg-orange-500 hover:bg-orange-600 text-white rounded-full p-3 shadow-md transition-all duration-300 flex items-center justify-center relative z-10"
     [title]="isPlaying() ? 'Pausar preview' : 'Reproducir preview'">
-
     @if (!isPlaying()) {
     <!-- Play icon -->
     <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 transform scale-x-110" fill="currentColor"

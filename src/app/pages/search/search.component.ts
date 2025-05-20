@@ -5,6 +5,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { PreviewButtonComponent } from '../../shared/components/preview-button/preview-button.component';
+import { DeezerSearchResult } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-search',
@@ -20,7 +21,7 @@ export class SearchComponent {
   query = signal('');
   loading = signal(false);
   error = signal('');
-  results = signal<{ artists: any; albums: any; tracks: any } | null>(null);
+results = signal<DeezerSearchResult | null>(null);
 
   selectedCategory = signal<'all' | 'artists' | 'albums' | 'tracks'>('all');
 

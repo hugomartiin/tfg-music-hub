@@ -68,7 +68,6 @@ export class ArtistComponent implements OnInit, OnDestroy {
           })
         );
 
-        // For Discogs data, chain after searching artist by name
         const discogs$ = name
           ? this.discogsService.searchArtist(name).pipe(
               switchMap((search: DiscogsSearchResult) => {
@@ -103,11 +102,9 @@ export class ArtistComponent implements OnInit, OnDestroy {
             )
           : of(null);
 
-        // Wait for all Deezer calls and Discogs calls in parallel
         return forkJoin([albums$, topTracks$, discogs$]);
       }),
       catchError(() => {
-        // En caso de error en getArtist
         this.artist.set(null);
         this.albums.set([]);
         this.topTracks.set([]);

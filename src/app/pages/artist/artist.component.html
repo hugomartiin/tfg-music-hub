@@ -71,7 +71,9 @@
                         {{ (track.duration / 60) | number:'1.0-0' }} min
                     </span>
                 </div>
-                <app-preview-button class="z-0" [previewUrl]="track.preview"></app-preview-button>
+                <app-preview-button [previewUrl]="track.preview" [title]="track.title" [artist]="track.artist?.name"
+                    [cover]="track.album?.cover_medium">
+                </app-preview-button>
             </div>
             }
         </div>
@@ -97,7 +99,7 @@
 
 
         <div class="mt-6 text-center">
-            @if ((albums()?.length ?? 0) > 6) {
+            @if ((albums()?.length ?? 0) >= 8) {
             @if ((albums()?.length ?? 0) > visibleCount()) {
             <app-button label="Ver más" (click)="showMore()" />
             } @else {

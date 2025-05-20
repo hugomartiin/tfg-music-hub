@@ -1,0 +1,18 @@
+<div *ngIf="audio.isPlaying()"
+    class="fixed bottom-0 left-0 w-full bg-[#0e0e24] text-white px-6 py-5 flex items-center justify-between shadow-lg z-50">
+    <div class="flex items-center gap-4">
+        <img [src]="audio.cover()" alt="cover" class="w-14 h-14 object-cover rounded-md" />
+        <div>
+            <p class="font-semibold text-sm">{{ audio.title() }}</p>
+            <p class="text-xs text-gray-400">{{ audio.artist() }}</p>
+        </div>
+    </div>
+
+    <button (click)="audio.stop()" class="bg-white text-black rounded-full p-2 hover:bg-gray-200 transition">
+        <!-- Pause Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+            <rect x="6" y="5" width="4" height="14" rx="1" />
+            <rect x="14" y="5" width="4" height="14" rx="1" />
+        </svg>
+    </button>
+</div>

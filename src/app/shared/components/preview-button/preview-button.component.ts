@@ -7,23 +7,18 @@ import { AudioPlayerService } from '../../../services/audio.service';
 })
 export class PreviewButtonComponent {
   @Input() previewUrl!: string;
+  @Input() title?: string;
+  @Input() artist?: string;
+  @Input() cover?: string;
 
-  constructor(private audioPlayerService: AudioPlayerService) {}
+  constructor(private audio: AudioPlayerService) {}
 
   isPlaying(): boolean {
-    return this.audioPlayerService.isPlayingUrl(this.previewUrl);
-  }
-
-  togglePlayback() {
-    if (this.isPlaying()) {
-      this.audioPlayerService.stop();
-    } else {
-      this.audioPlayerService.play(this.previewUrl);
-    }
+    return this.audio.currentUrl() === this.previewUrl && this.audio.isPlaying();
   }
 
   onButtonClick(event: MouseEvent) {
     event.stopPropagation();
-    this.togglePlayback();
+    this.audio.toggle(this.previewUrl, this.title, this.artist, this.cover);
   }
 }

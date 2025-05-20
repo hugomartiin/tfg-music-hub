@@ -9,7 +9,10 @@
             <div>
                 <p class="uppercase text-sm text-gray-300 font-semibold">Álbum</p>
                 <h1 class="text-4xl md:text-5xl font-bold mt-1">{{ album.title }}</h1>
-                <p class="text-lg text-orange-400 mt-2">{{ album.artist.name }}</p>
+                <a [routerLink]="['/artist', album.artist.id]"
+                    class="text-lg text-orange-400 mt-2 hover:underline cursor-pointer inline-block">
+                    {{ album.artist.name }}
+                </a>
                 <p class="text-sm text-gray-400 mt-1">
                     Publicado: {{ album.release_date }}
                     @if (album.label) {
@@ -41,7 +44,9 @@
                         {{ (track.duration / 60) | number:'1.0-0' }} min
                     </span>
 
-                    <app-preview-button [previewUrl]="track.preview" />
+                    <app-preview-button [previewUrl]="track.preview" [title]="track.title" [artist]="track.artist?.name"
+                        [cover]="track.album?.cover_medium">
+                    </app-preview-button>
                 </div>
             </div>
         </div>

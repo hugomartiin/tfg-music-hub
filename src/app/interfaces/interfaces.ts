@@ -15,6 +15,11 @@ export interface DeezerTrackSearchResponse {
   total?: number;
   next?: string;
 }
+export interface DeezerSearchResult {
+  artists: { data: DeezerArtist[] };
+  albums: { data: DeezerAlbum[] };
+  tracks: { data: DeezerTrack[] };
+}
 
 export interface DeezerGenre {
   id: number;
