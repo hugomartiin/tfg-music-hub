@@ -1,31 +1,29 @@
-<div class="bg-[#1f1f3a] min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 py-6">
+<div class="bg-[#1f1f3a] min-h-screen text-white">
+    <div class="max-w-7xl mx-auto px-4 py-6" data-aos="fade-in">
+
         @if (loading()) {
         <div class="text-center text-white">Cargando artista...</div>
         } @else if (artist() || discogsArtist()) {
-        <div class="flex flex-col md:flex-row items-center gap-4">
+
+        <div class="flex flex-col md:flex-row items-center gap-4 transition-opacity duration-500" data-aos="fade-right">
             <img [src]="artist()?.picture_medium || discogsArtist()?.images?.[0]?.uri"
-                [alt]="artist()?.name || discogsArtist()?.name" class="rounded-full w-40 h-40 object-cover" />
+                [alt]="artist()?.name || discogsArtist()?.name"
+                class="rounded-full w-40 h-40 object-cover shadow-md transition-transform duration-300 hover:scale-105" />
 
             <div class="text-center md:text-left">
-                <h1 class="text-4xl text-white font-bold">
-                    {{ artist()?.name || discogsArtist()?.name }}
-                </h1>
-
+                <h1 class="text-4xl font-bold">{{ artist()?.name || discogsArtist()?.name }}</h1>
                 @if (artist()) {
                 <p class="text-sm text-gray-400">
-                    {{ artist()?.nb_album }} álbumes y singles ·
-                    {{ artist()?.nb_fan | number }} fans
+                    {{ artist()?.nb_album }} álbumes y singles · {{ artist()?.nb_fan | number }} fans
                 </p>
                 }
 
-                @if (discogsArtist()) {
-                <div class="mt-4 text-sm text-gray-300">
-                    @if (cleanProfile) {
-                    <div class="mt-2 text-gray-300">
-                        <span class="text-white font-semibold">Biografía: </span>
-                        <span>{{ truncatedProfile }}</span>
 
+                @if (discogsArtist()) {
+                <div class="mt-4 text-sm text-gray-300 space-y-2" data-aos="fade-up">
+                    @if (cleanProfile) {
+                    <div>
+                        <span class="text-white font-semibold">Biografía: </span>{{ truncatedProfile }}
                         @if (isTruncatedProfile) {
                         <button (click)="toggleExpanded()" class="ml-2 text-blue-400 hover:underline">
                             {{ isExpanded() ? 'Leer menos' : 'Leer más' }}
@@ -34,10 +32,9 @@
                     </div>
                     }
                     @if (discogsArtist()?.namevariations?.length) {
-                    <div class="mt-2 text-gray-300">
+                    <div>
                         <span class="text-white font-semibold">También conocido como: </span>
                         {{ truncatedNameVariations }}
-
                         @if (isTruncatedNameVariations) {
                         <button (click)="toggleNameVariations()" class="ml-2 text-blue-400 hover:underline">
                             {{ isNameVariationsExpanded() ? 'Leer menos' : 'Leer más' }}
@@ -45,51 +42,48 @@
                         }
                     </div>
                     }
-
                     @if (discogsMemberNames) {
-                    <p class="mt-2">
-                        <span class="text-white font-semibold">Miembros: </span>
-                        {{ discogsMemberNames }}
+                    <p>
+                        <span class="text-white font-semibold">Miembros: </span>{{ discogsMemberNames }}
                     </p>
                     }
                 </div>
                 }
             </div>
         </div>
-        <!-- top canciones -->
+
+        <!-- Top canciones -->
         @if (topTracks()?.length) {
-        <h2 class="text-2xl text-white mt-8 mb-4">Top Canciones</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 z-0">
+        <h2 class="text-2xl mt-8 mb-4 font-semibold" data-aos="fade-up">Top Canciones</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             @for (track of topTracks(); track track.id) {
-            <div class="bg-white/10 rounded-xl p-4 flex gap-4 items-center hover:shadow-lg transition">
+            <div class="bg-white/10 rounded-xl p-4 flex gap-4 items-center hover:shadow-lg transition-transform duration-300 hover:scale-[1.02]"
+                data-aos="zoom-in">
                 <img [src]="track.album.cover_small" [alt]="track.title" class="w-16 h-16 rounded" />
                 <div class="flex-1 min-w-0">
-                    <p class="text-white font-semibold truncate">
-                        {{ track.title }}
-                    </p>
-                    <span class="text-sm text-gray-400 w-16 text-right">
+                    <p class="font-semibold truncate">{{ track.title }}</p>
+                    <span class="text-sm text-gray-400">
                         {{ (track.duration / 60) | number:'1.0-0' }} min
                     </span>
                 </div>
                 <app-preview-button [previewUrl]="track.preview" [title]="track.title" [artist]="track.artist?.name"
-                    [cover]="track.album?.cover_medium">
-                </app-preview-button>
+                    [cover]="track.album?.cover_medium"></app-preview-button>
             </div>
             }
         </div>
         }
 
-        <!-- albumes -->
-        <h2 class="text-2xl text-white mt-8 mb-4">Álbumes</h2>
+        <!-- Álbumes -->
+        <h2 class="text-2xl mt-8 mb-4 font-semibold" data-aos="fade-up">Álbumes</h2>
         <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-6">
             @for (album of albums()?.slice(0, visibleCount()) ?? []; track album.id) {
             <a [routerLink]="['/album', album.id]"
-                class="group bg-white/10 rounded-xl p-4 text-white hover:shadow-xl transition duration-300 flex flex-col items-center">
+                class="group bg-white/10 rounded-xl p-4 text-white hover:shadow-xl transition duration-300 flex flex-col items-center"
+                data-aos="zoom-in">
                 <div class="w-full h-[240px] overflow-hidden rounded-lg">
                     <img [src]="album.cover_medium" [alt]="album.title"
                         class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
                 </div>
-
                 <p class="mt-3 text-center font-semibold group-hover:text-orange-400 truncate w-full">
                     {{ album.title }}
                 </p>
@@ -97,21 +91,19 @@
             }
         </div>
 
-
-        <div class="mt-6 text-center">
+        <div class="mt-6 text-center" data-aos="fade-up">
             @if ((albums()?.length ?? 0) >= 8) {
             @if ((albums()?.length ?? 0) > visibleCount()) {
-            <app-button label="Ver más" (click)="showMore()" />
+            <app-button label="Ver más" (click)="showMore()"></app-button>
             } @else {
-            <app-button label="Ver menos" (click)="showLess()" />
+            <app-button label="Ver menos" (click)="showLess()"></app-button>
             }
             }
-
         </div>
-        }
-        <!-- enlaces-->
+
+        <!-- Enlaces -->
         @if (discogsArtist()?.urls?.length) {
-        <div class="mt-8 p-4 border-t border-gray-600 text-blue-400 max-w-6xl mx-auto">
+        <div class="mt-8 p-4 border-t border-gray-600 text-blue-400 max-w-6xl mx-auto" data-aos="fade-up">
             <span class="text-white font-semibold">Enlaces:</span>
             @for (url of discogsArtist()?.urls; track url) {
             <a [href]="url" target="_blank" class="underline ml-1 hover:text-blue-300 break-all block">
@@ -120,6 +112,6 @@
             }
         </div>
         }
-
+        }
     </div>
 </div>
