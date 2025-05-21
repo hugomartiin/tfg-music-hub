@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   discogsToken: 'wERLsXgsndqSTZEDWaZhKlAOhObZIPgXxsHOwTLG',
   firebase: {
     apiKey: "AIzaSyDKh6obN0FP2jUds-x6rTZygPsB3oYvRbg",

@@ -1,12 +1,68 @@
-@if (!isHome()) {
-<header class="fixed  w-full py-5 px-6 text-white shadow-md backdrop-blur-md bg-[#0e0e24] bg-opacity-95 z-50">
-    <div class="max-w-7xl mx-auto flex justify-between items-center">
-        <a [routerLink]="'/'" class="transition-transform hover:scale-105">
-            <img src="logo-musichub.png" alt="MusicHub Logo" class="h-12 md:h-16 object-contain" />
+<header *ngIf="!isHome()"
+    class="fixed w-full py-4 px-0 md:px-6 text-white shadow-md backdrop-blur-md bg-[#0e0e24] bg-opacity-95 z-50">
+    <div class="max-w-7xl mx-auto px-4 md:px-0 flex flex-wrap justify-between md:flex-nowrap items-center gap-4">
+
+        <!-- Logo -->
+        <a [routerLink]="'/'" class="transition-transform hover:scale-105 flex-shrink-0">
+            <img src="logo-musichub.png" alt="MusicHub Logo" class="h-10 sm:h-12 md:h-16 object-contain" />
         </a>
-        <div class="w-full max-w-sm ml-4">
+
+        <!-- Buscador -->
+        <div class="flex-1 min-w-[180px] max-w-[500px] w-full md:ml-4">
             <app-live-search (search)="onSearch($event)"></app-live-search>
+        </div>
+
+        <!-- Botón iniciar sesión -->
+        <button *ngIf="!currentUser()" (click)="openLogin()"
+            class="hidden md:inline-flex items-center gap-2 bg-[#c27aff] hover:bg-[#b264f2] text-white px-4 py-2 rounded-full shadow-sm transition-all duration-200 font-semibold text-sm">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M15 12H3m0 0l4-4m-4 4l4 4m13-7v10a2 2 0 01-2 2H9" />
+            </svg>
+            Iniciar sesión
+        </button>
+
+        <!-- Usuario logueado -->
+        <div *ngIf="currentUser()" class="flex items-center gap-2 sm:gap-4 text-white text-sm ml-auto flex-shrink-0">
+            <div class="hidden md:flex items-center gap-2">
+                <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M5.121 17.804A9.003 9.003 0 0112 15c2.21 0 4.21.805 5.879 2.137M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span class="font-medium">
+                    {{ currentUser()?.displayName || currentUser()?.email }}
+                </span>
+            </div>
+
+            <button (click)="showLogoutConfirm = true"
+                class="flex items-center gap-1 sm:gap-2 px-3 py-1.5 bg-[#f74f00] hover:bg-[#f72100] text-white rounded-full transition duration-200 font-medium text-xs sm:text-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7" />
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3 4a1 1 0 011-1h9a1 1 0 011 1v16a1 1 0 01-1 1H4a1 1 0 01-1-1V4z" />
+                </svg>
+                <span class="hidden sm:inline">Cerrar sesión</span>
+            </button>
+
         </div>
     </div>
 </header>
-}
+<app-login-modal *ngIf="showLogin" (closed)="closeModals()" (openRegisterModal)="openRegister()"></app-login-modal>
+<app-register-modal *ngIf="showRegister" (closed)="closeModals()"></app-register-modal>
+<app-modal [visible]="showLogoutConfirm" (close)="showLogoutConfirm = false">
+    <div class="text-white text-center space-y-4">
+        <h2 class="text-xl font-semibold">¿Cerrar sesión?</h2>
+        <p class="text-sm text-gray-300">¿Estás seguro de que quieres cerrar tu sesión?</p>
+        <div class="flex justify-center gap-4 mt-6">
+            <button (click)="confirmLogout()"
+                class="bg-[#f74f00] hover:bg-[#f72100] text-white px-4 py-2 rounded-full font-semibold transition">
+                Sí, cerrar
+            </button>
+            <button (click)="showLogoutConfirm = false"
+                class="bg-zinc-700 hover:bg-zinc-600 text-white px-4 py-2 rounded-full font-semibold transition">
+                Cancelar
+            </button>
+        </div>
+    </div>
+</app-modal>

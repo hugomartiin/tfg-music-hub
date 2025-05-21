@@ -6,10 +6,11 @@ import { GlobalPlayerComponent } from './shared/components/global-player/global-
 import { Router, NavigationStart } from '@angular/router';
 import { AudioPlayerService } from './services/audio.service';
 import * as AOS from 'aos';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent,GlobalPlayerComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent,GlobalPlayerComponent,CommonModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

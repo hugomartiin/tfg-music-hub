@@ -1,10 +1,10 @@
-<div class="w-full md:w-auto relative z-[9999]">
+<div class="w-full md:w-96 relative z-[9999]">
     <app-search-bar [(model)]="searchValue" (search)="onSearch($event)"
         (queryChange)="onQueryChange($event)"></app-search-bar>
 
     <!-- Resultados -->
     <div *ngIf="topResults.length"
-        class="absolute top-full left-0 bg-[#1e1e2f] shadow-xl mt-2 rounded-lg w-full max-w-md space-y-2 p-3 z-[9999]">
+        class="absolute top-full  left-0 bg-[#1e1e2f] shadow-xl mt-2 rounded-lg w-full max-w-md space-y-2 p-3 z-[9999]">
 
 
         <h3 class="text-sm text-gray-400 px-1">Resultados principales:</h3>

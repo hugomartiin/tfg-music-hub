@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, signal, ViewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { debounceTime, Subject } from 'rxjs';
@@ -6,6 +6,11 @@ import { DeezerService } from '../../services/deezer.service';
 import { SearchBarComponent } from '../../shared/components/search-bar/search-bar.component';
 import { MainCardComponent } from '../../shared/components/main-card/main-card.component';
 import { PreviewButtonComponent } from '../../shared/components/preview-button/preview-button.component';
+import { LoginModalComponent } from '../login/login.component';
+import { RegisterModalComponent } from '../register/register.component';
+import { AuthService } from '../../services/auth.service';
+import { ButtonComponent } from '../../shared/components/button/button.component';
+import { ModalComponent } from '../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-home',
@@ -16,19 +21,34 @@ import { PreviewButtonComponent } from '../../shared/components/preview-button/p
     MainCardComponent,
     CommonModule,
     RouterLink,
-    PreviewButtonComponent
+    PreviewButtonComponent,
+    LoginModalComponent,
+    RegisterModalComponent,
+    ButtonComponent,
+    ModalComponent
   ],
+  providers: [AuthService]
 })
 export class HomeComponent {
   topResults: any[] = [];
   hasSearched = false;
   loading = false;
   searchValue = '';
-  @ViewChild('searchBlock', { read: ElementRef }) searchBlockRef!: ElementRef<HTMLInputElement>;
+  isHome = signal(false);
+  showLogin = false;
+  showRegister = false;
+  showLogoutConfirm = false;
+  currentUser: any;
 
+  @ViewChild('searchBlock', { read: ElementRef }) searchBlockRef!: ElementRef<HTMLInputElement>;
   private query$ = new Subject<string>();
 
-  constructor(private router: Router, private deezerService: DeezerService) {
+  constructor(
+    private router: Router,
+    private deezerService: DeezerService,
+    public authService: AuthService
+  ) {
+    this.currentUser = this.authService.currentUser;
     this.query$.pipe(debounceTime(300)).subscribe((query) => {
       if (!query) {
         this.topResults = [];
@@ -61,7 +81,8 @@ export class HomeComponent {
   isTrack(item: any): boolean {
     return !!item.preview;
   }
-scrollToSearchInput(type: 'artist' | 'album') {
+
+  scrollToSearchInput(type: 'artist' | 'album') {
     const placeholderMap = {
       artist: 'Busca un artista (ej: Daft Punk)...',
       album: 'Busca un álbum (ej: Discovery)...',
@@ -82,9 +103,10 @@ scrollToSearchInput(type: 'artist' | 'album') {
       }
     }
   }
+
   getImage(item: any): string {
     if (item.picture_small) return item.picture_small;
-    if (item.cover_small) return item.cover_small;   
+    if (item.cover_small) return item.cover_small;
     if (item.album?.cover_small) return item.album.cover_small;
     return '';
   }
@@ -107,4 +129,28 @@ scrollToSearchInput(type: 'artist' | 'album') {
       this.router.navigate(['/album', item.id]);
     }
   }
+openLogin() {
+    this.showLogin = true;
+  }
+
+  openRegister() {
+    this.showRegister = true;
+    this.showLogin = false;
+  }
+
+  closeModals() {
+    this.showLogin = false;
+    this.showRegister = false;
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  confirmLogout() {
+    this.logout();
+    this.showLogoutConfirm = false;
+  }
+
+ 
 }

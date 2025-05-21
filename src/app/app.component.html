@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<main [class.pt-[100px]]="!isHome()">
+<main [ngClass]="{'pt-[80px]': !isHome(), 'md:pt-[90px]': !isHome()}">
 
     <router-outlet></router-outlet>
     <app-global-player />
