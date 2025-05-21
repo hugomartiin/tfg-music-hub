@@ -20,7 +20,9 @@
             </div>
 
             <div *ngIf="isTrack(item)" (click)="$event.stopPropagation()">
-                <app-preview-button [previewUrl]="item.preview"></app-preview-button>
+                <app-preview-button [previewUrl]="item.preview" [title]="item.title" [artist]="item.artist?.name"
+                    [cover]="item.album?.cover_medium">
+                </app-preview-button>
             </div>
 
         </div>

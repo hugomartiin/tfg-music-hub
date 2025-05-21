@@ -31,9 +31,9 @@ export class LiveSearchComponent {
       }
 
       this.deezerService.search(query).subscribe((res) => {
-        const topTracks = res.tracks.data.slice(0, 1);
+        const topTracks = res.tracks.data.slice(0, 2);
         const topArtists = res.artists.data.slice(0, 1);
-        const topAlbums = res.albums.data.slice(0, 1);
+        const topAlbums = res.albums.data.slice(0, 2);
         this.topResults = [...topArtists, ...topAlbums, ...topTracks];
       });
     });

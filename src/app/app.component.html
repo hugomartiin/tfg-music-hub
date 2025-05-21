@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<main>
+<main [class.pt-[100px]]="!isHome()">
 
     <router-outlet></router-outlet>
     <app-global-player />

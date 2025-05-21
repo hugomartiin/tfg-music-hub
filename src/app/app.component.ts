@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { NavigationEnd, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
@@ -15,6 +15,7 @@ import * as AOS from 'aos';
 })
 export class AppComponent implements OnInit {
   title = 'tfg-music-hub';
+  isHome = signal(false);
   constructor(private router: Router, private audioService: AudioPlayerService) {
     this.router.events.subscribe(event => {
   if (event instanceof NavigationStart) {
@@ -24,6 +25,10 @@ export class AppComponent implements OnInit {
   if (event instanceof NavigationEnd) {
     setTimeout(() => AOS.refresh(), 100); 
   }
+  if (event instanceof NavigationEnd) {
+        const url = event.urlAfterRedirects;
+        this.isHome.set(url === '/' || url.startsWith('/home'));
+      }
 });
 
   }
