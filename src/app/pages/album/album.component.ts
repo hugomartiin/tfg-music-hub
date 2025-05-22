@@ -4,17 +4,23 @@ import { DeezerService } from '../../services/deezer.service';
 import { DeezerAlbumDetail, DiscogsRelease } from '../../interfaces/interfaces';
 import { CommonModule } from '@angular/common';
 import { PreviewButtonComponent } from '../../shared/components/preview-button/preview-button.component';
+import { FavoriteButtonComponent } from '../../shared/components/favorite-button/favorite-button.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-album',
   templateUrl: './album.component.html',
-  imports: [CommonModule, PreviewButtonComponent,RouterLink],
-  standalone: true
+  imports: [CommonModule, PreviewButtonComponent,RouterLink,FavoriteButtonComponent],
+  standalone: true,
+  providers: [AuthService]
+
 })
 export class AlbumComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private deezerService = inject(DeezerService);
-
+  constructor(
+      public authService: AuthService
+    ) {}
   album: DeezerAlbumDetail | null = null;
   isLoading = true;
 

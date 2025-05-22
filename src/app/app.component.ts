@@ -7,17 +7,19 @@ import { Router, NavigationStart } from '@angular/router';
 import { AudioPlayerService } from './services/audio.service';
 import * as AOS from 'aos';
 import { CommonModule } from '@angular/common';
+import { ToastComponent } from './shared/components/toast/toast.component';
+import { ToastService } from './services/toast.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent,GlobalPlayerComponent,CommonModule],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent,GlobalPlayerComponent,CommonModule,ToastComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
   title = 'tfg-music-hub';
   isHome = signal(false);
-  constructor(private router: Router, private audioService: AudioPlayerService) {
+  constructor(private router: Router, private audioService: AudioPlayerService,private toast: ToastService) {
     this.router.events.subscribe(event => {
   if (event instanceof NavigationStart) {
     this.audioService.stop();

@@ -1,0 +1,15 @@
+<div class="bg-white/10 rounded-xl p-4 flex gap-4 items-center hover:shadow-lg transition-transform duration-300 hover:scale-[1.02]"
+    data-aos="zoom-in">
+    <img [src]="track.album.cover_small" [alt]="track.title" class="w-16 h-16 rounded" />
+    <div class="flex-1 min-w-0">
+        <p class="font-semibold truncate">{{ track.title }}</p>
+        <span class="text-sm text-gray-400">
+            {{ (track.duration / 60) | number:'1.0-0' }} min
+        </span>
+    </div>
+    @if(authService.currentUser()){
+    <app-favorite-button [track]="track"></app-favorite-button>
+    }
+    <app-preview-button [previewUrl]="track.preview" [title]="track.title" [artist]="track.artist?.name"
+        [cover]="track.album?.cover_medium"></app-preview-button>
+</div>

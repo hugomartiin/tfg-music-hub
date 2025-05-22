@@ -1,4 +1,3 @@
-// register.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -18,6 +17,8 @@ export class RegisterModalComponent {
   errorMsg = '';
   successMsg = '';
   loading = false;
+  firstName = '';
+  lastName = '';
 
   @Output() closed = new EventEmitter<void>();
 
@@ -27,26 +28,40 @@ export class RegisterModalComponent {
     this.closed.emit();
   }
 
-  async register() {
-    this.errorMsg = '';
-    this.successMsg = '';
-    if (this.password !== this.confirmPassword) {
-      this.errorMsg = 'Las contraseñas no coinciden.';
-      return;
-    }
+ async register() {
+  this.errorMsg = '';
+  this.successMsg = '';
 
-    this.loading = true;
-    try {
-      const cred = await this.authService.register(this.email, this.password);
-      const displayName = cred.user.displayName || cred.user.email;
-      this.successMsg = `Cuenta creada con éxito. Bienvenido, ${displayName}!`;
-      this.email = '';
-      this.password = '';
-      this.confirmPassword = '';
-    } catch (error: any) {
-      this.errorMsg = error.message || 'Error al registrar la cuenta.';
-    } finally {
-      this.loading = false;
-    }
+  if (this.password !== this.confirmPassword) {
+    this.errorMsg = 'Las contraseñas no coinciden.';
+    return;
   }
+
+  if (!this.firstName || !this.lastName) {
+    this.errorMsg = 'Por favor, introduce tu nombre y apellidos.';
+    return;
+  }
+
+  const fullName = `${this.firstName} ${this.lastName}`.trim();
+
+  this.loading = true;
+  try {
+    const cred = await this.authService.register(this.email, this.password, fullName);
+    const displayName = cred.user.displayName || cred.user.email;
+    this.successMsg = `Cuenta creada con éxito. Bienvenido, ${displayName}!`;
+
+    this.email = '';
+    this.password = '';
+    this.confirmPassword = '';
+    this.firstName = '';
+    this.lastName = '';
+          setTimeout(() => this.close(), 2000); 
+
+  } catch (error: any) {
+    this.errorMsg = error.message || 'Error al registrar la cuenta.';
+  } finally {
+    this.loading = false;
+  }
+}
+
 }

@@ -43,7 +43,9 @@
                     <span class="text-sm text-gray-400 w-16 text-right">
                         {{ (track.duration / 60) | number:'1.0-0' }} min
                     </span>
-
+                    @if(authService.currentUser()){
+                    <app-favorite-button *ngIf="track" [track]="track"></app-favorite-button>
+                    }
                     <app-preview-button [previewUrl]="track.preview" [title]="track.title" [artist]="track.artist?.name"
                         [cover]="track.album?.cover_medium">
                     </app-preview-button>

@@ -6,6 +6,7 @@ import { map } from 'rxjs';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { PreviewButtonComponent } from '../../shared/components/preview-button/preview-button.component';
 import { DeezerSearchResult } from '../../interfaces/interfaces';
+import { TrackCardComponent } from '../../shared/components/track-card/track-card.component';
 
 @Component({
   selector: 'app-search',
@@ -15,6 +16,7 @@ import { DeezerSearchResult } from '../../interfaces/interfaces';
     RouterModule,
     ButtonComponent,
     PreviewButtonComponent,
+    TrackCardComponent
   ],
 })
 export class SearchComponent {

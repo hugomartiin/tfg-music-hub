@@ -2,6 +2,10 @@
     <h2 class="text-2xl font-bold mb-6 text-center">Registrarse</h2>
 
     <form (ngSubmit)="register()" #registerForm="ngForm" class="flex flex-col gap-4" *ngIf="!successMsg">
+        <input type="text" name="firstName" [(ngModel)]="firstName" placeholder="Nombre" required
+            class="p-3 border rounded-md dark:bg-zinc-800 dark:text-white" [disabled]="loading" />
+        <input type="text" name="lastName" [(ngModel)]="lastName" placeholder="Apellidos" required
+            class="p-3 border rounded-md dark:bg-zinc-800 dark:text-white" [disabled]="loading" />
         <input type="email" name="email" [(ngModel)]="email" placeholder="Correo electrónico" required
             class="p-3 border rounded-md dark:bg-zinc-800 dark:text-white" [disabled]="loading" />
         <input type="password" name="password" [(ngModel)]="password" placeholder="Contraseña" required minlength="6"

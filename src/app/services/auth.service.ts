@@ -1,5 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, User } from '@angular/fire/auth';
+import {
+  Auth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
+  User,
+  updateProfile
+} from '@angular/fire/auth';
 import { onAuthStateChanged } from 'firebase/auth';
 import { signal } from '@angular/core';
 
@@ -19,8 +28,12 @@ export class AuthService {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  register(email: string, password: string) {
-    return createUserWithEmailAndPassword(this.auth, email, password);
+  async register(email: string, password: string, displayName: string) {
+    const cred = await createUserWithEmailAndPassword(this.auth, email, password);
+    if (cred.user) {
+      await updateProfile(cred.user, { displayName });
+    }
+    return cred;
   }
 
   logout() {

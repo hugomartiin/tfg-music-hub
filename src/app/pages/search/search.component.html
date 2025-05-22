@@ -81,28 +81,18 @@
 
         @if (topTracks().length) {
         <h3 class="text-2xl font-bold mt-8 mb-4 text-white" data-aos="fade-up">Canciones</h3>
-        <div class="divide-y divide-gray-600 border border-gray-700 rounded-lg bg-white/10 backdrop-blur-sm"
-            data-aos="fade-up" data-aos-delay="100">
+        <div class=" rounded-lg  backdrop-blur-sm" data-aos="fade-up" data-aos-delay="100">
             @for (track of topTracks(); track track.id) {
-            <div class="flex items-center justify-between gap-4 p-3 hover:bg-orange-900/40 transition-colors rounded"
-                data-aos="fade-up" data-aos-delay="150">
-                <div class="flex items-center gap-4 flex-1 cursor-pointer" [routerLink]="['/track', track.id]">
-                    <img [src]="track.album.cover_small" alt="{{ track.title }}"
-                        class="w-14 h-14 rounded-lg object-cover" />
-                    <div class="flex flex-col">
-                        <p class="font-semibold text-white">{{ track.title }}</p>
-                        <p class="text-sm text-gray-300">{{ track.artist.name }}</p>
-                    </div>
-                </div>
-                <app-preview-button [previewUrl]="track.preview" [title]="track.title" [artist]="track.artist?.name"
-                    [cover]="track.album?.cover_medium"></app-preview-button>
+            <div class="mt-2">
+                <app-track-card [track]="track"></app-track-card>
             </div>
             }
         </div>
         }
 
         @if (!topTracks().length && (topArtists().length || topAlbums().length)) {
-        <p class="text-center text-gray-400 italic mt-8" data-aos="fade-in">No hay canciones para "{{ query() }}"</p>
+        <p class="text-center text-gray-400 italic mt-8" data-aos="fade-in">No hay canciones para "{{ query()
+            }}"</p>
         }
         }
 
@@ -117,13 +107,15 @@
                 data-aos="zoom-in" data-aos-delay="150">
                 <img [src]="artist.picture_medium" alt="{{ artist.name }}"
                     class="rounded-full w-28 h-28 object-cover mb-3 group-hover:scale-105 transition-transform" />
-                <p class="text-center text-lg font-semibold text-white group-hover:text-orange-400 truncate w-full">{{
+                <p class="text-center text-lg font-semibold text-white group-hover:text-orange-400 truncate w-full">
+                    {{
                     artist.name }}</p>
             </a>
             }
         </div>
         } @else {
-        <p class="text-center text-gray-400 italic mt-8" data-aos="fade-in">No hay artistas para "{{ query() }}"</p>
+        <p class="text-center text-gray-400 italic mt-8" data-aos="fade-in">No hay artistas para "{{ query() }}"
+        </p>
         }
         }
 
@@ -138,13 +130,15 @@
                 data-aos="zoom-in" data-aos-delay="150">
                 <img [src]="album.cover_medium" alt="{{ album.title }}"
                     class="rounded w-full aspect-square object-cover mb-3 group-hover:scale-105 transition-transform" />
-                <p class="text-center font-semibold text-white group-hover:text-orange-400 truncate">{{ album.title }}
+                <p class="text-center font-semibold text-white group-hover:text-orange-400 truncate">{{
+                    album.title }}
                 </p>
             </a>
             }
         </div>
         } @else {
-        <p class="text-center text-gray-400 italic mt-8" data-aos="fade-in">No hay álbumes para "{{ query() }}"</p>
+        <p class="text-center text-gray-400 italic mt-8" data-aos="fade-in">No hay álbumes para "{{ query() }}"
+        </p>
         }
         }
 
@@ -169,7 +163,8 @@
             }
         </div>
         } @else {
-        <p class="text-center text-gray-400 italic mt-8" data-aos="fade-in">No hay canciones para "{{ query() }}"</p>
+        <p class="text-center text-gray-400 italic mt-8" data-aos="fade-in">No hay canciones para "{{ query()
+            }}"</p>
         }
         }
         }

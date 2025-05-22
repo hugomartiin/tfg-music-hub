@@ -1,0 +1,32 @@
+<div class="bg-gradient-to-b from-[#1f1f3a] to-[#0f0f1e] min-h-screen text-white">
+    <div class="max-w-7xl mx-auto px-4 py-6">
+        <h1 class="text-3xl font-bold mb-6">Tu cuenta</h1>
+        <nav class="mb-8 flex gap-4 text-lg font-medium">
+            <a routerLink="favorites" routerLinkActive="text-orange-400 border-b-2 border-orange-400"
+                class="pb-1 hover:text-orange-300 transition">Favoritos</a>
+            <a routerLink="playlists" routerLinkActive="text-orange-400 border-b-2 border-orange-400"
+                class="pb-1 hover:text-orange-300 transition">Playlists</a>
+        </nav>
+        @if (!authService.currentUser()) {
+        <div class="text-center text-gray-300 p-12">
+            <p class="text-xl mb-4">Inicia sesión o regístrate para ver tus favoritos y playlists</p>
+            <button (click)="openLogin()"
+                class="inline-flex items-center gap-2 bg-[#c27aff] hover:bg-[#b264f2] text-white px-6 py-2 rounded-full shadow-sm transition-all duration-200 font-semibold text-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15 12H3m0 0l4-4m-4 4l4 4m13-7v10a2 2 0 01-2 2H9" />
+                </svg>
+                Iniciar sesión
+            </button>
+        </div>
+        }
+        @else{
+        <router-outlet></router-outlet>
+        }
+
+    </div>
+</div>
+<!-- Modales -->
+<app-login-modal *ngIf="showLogin" (closed)="closeModals()" (openRegisterModal)="openRegister()"></app-login-modal>
+
+<app-register-modal *ngIf="showRegister" (closed)="closeModals()"></app-register-modal>

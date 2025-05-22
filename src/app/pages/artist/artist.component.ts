@@ -8,11 +8,12 @@ import { ButtonComponent } from '../../shared/components/button/button.component
 import { PreviewButtonComponent } from '../../shared/components/preview-button/preview-button.component';
 import { Subscription, forkJoin, of } from 'rxjs';
 import { switchMap, tap, catchError } from 'rxjs/operators';
+import { TrackCardComponent } from '../../shared/components/track-card/track-card.component';
 
 @Component({
   selector: 'app-artist',
   templateUrl: './artist.component.html',
-  imports: [RouterLink, CommonModule, ButtonComponent, PreviewButtonComponent],
+  imports: [RouterLink, CommonModule, ButtonComponent, PreviewButtonComponent,TrackCardComponent],
 })
 export class ArtistComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);

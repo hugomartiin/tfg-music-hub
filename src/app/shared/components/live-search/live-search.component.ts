@@ -15,6 +15,7 @@ import { PreviewButtonComponent } from '../preview-button/preview-button.compone
     RouterLink,
     PreviewButtonComponent
   ],
+  
   templateUrl: './live-search.component.html',
 })
 export class LiveSearchComponent {
@@ -23,7 +24,7 @@ export class LiveSearchComponent {
 
   @Output() search = new EventEmitter<string>();
 
-  constructor(private deezerService: DeezerService, private router: Router) {
+  constructor(private deezerService: DeezerService, private router: Router,) {
     this.query$.pipe(debounceTime(300)).subscribe((query) => {
       if (!query) {
         this.topResults = [];

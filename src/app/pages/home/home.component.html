@@ -121,8 +121,9 @@
             <app-main-card title="Álbumes" description="Consulta álbumes populares y sus versiones físicas."
                 image="album1.jpg" hoverColor="black" (onClick)="scrollToSearchInput('album')"></app-main-card>
 
-            <app-main-card title="Playlists" description="Guarda tus favoritos y crea tus propias playlists."
-                image="playlists1.jpg" hoverColor="orange-400"></app-main-card>
+            <a [routerLink]="'/user'"><app-main-card title="Playlists"
+                    description="Guarda tus favoritos y crea tus propias playlists." image="playlists1.jpg"
+                    hoverColor="orange-400"></app-main-card></a>
 
         </div>
     </section>

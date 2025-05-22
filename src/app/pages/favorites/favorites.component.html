@@ -1,0 +1,19 @@
+<div class=" min-h-screen text-white">
+    <div class="max-w-7xl py-6">
+
+        <h2 class="text-3xl font-bold mb-6">Tus Favoritos</h2>
+
+        @if (loading()) {
+        <div class="text-center text-gray-400">Cargando favoritos...</div>
+        } @else if (favorites().length === 0) {
+        <div class="text-center text-gray-400">No tienes canciones favoritas todavía.</div>
+        } @else {
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            @for (track of favorites(); track track.id) {
+            <app-track-card [track]="track"></app-track-card>
+
+            }
+        </div>
+        }
+    </div>
+</div>
