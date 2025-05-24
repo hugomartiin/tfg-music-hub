@@ -1,3 +1,11 @@
+export interface Playlist {
+  id?: string;
+  name: string;
+  description?: string;
+  createdAt: number;
+  tracks: string[]; 
+}
+
 export interface DeezerArtistSearchResponse {
   data: DeezerArtist[];
   total?: number;

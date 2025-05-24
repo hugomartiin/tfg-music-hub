@@ -1,14 +1,37 @@
 <div class="bg-gradient-to-b from-[#1f1f3a] to-[#0f0f1e] min-h-screen text-white">
     <div class="max-w-7xl mx-auto px-4 py-6">
-        <h1 class="text-3xl font-bold mb-6">Tu cuenta</h1>
+
+        <!-- Bloque de perfil -->
+        <div *ngIf="authService.currentUser()" class="flex items-center gap-4 mb-8">
+            <!-- Icono circular -->
+            <div class="bg-purple-500 w-16 h-16 rounded-full flex items-center justify-center shadow-md">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M5.121 17.804A9.003 9.003 0 0112 15c2.21 0 4.21.805 5.879 2.137M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+            </div>
+
+            <!-- Nombre o correo -->
+            <div>
+                <p class="text-xl font-semibold">
+                    {{ authService.currentUser()?.displayName || authService.currentUser()?.email }}
+                </p>
+                <button (click)="showLogoutConfirm = true" class="text-sm text-red-400 hover:text-red-300 transition">
+                    Cerrar sesión
+                </button>
+            </div>
+        </div>
+
+        <!-- Navegación -->
         <nav class="mb-8 flex gap-4 text-lg font-medium">
             <a routerLink="favorites" routerLinkActive="text-orange-400 border-b-2 border-orange-400"
                 class="pb-1 hover:text-orange-300 transition">Favoritos</a>
             <a routerLink="playlists" routerLinkActive="text-orange-400 border-b-2 border-orange-400"
                 class="pb-1 hover:text-orange-300 transition">Playlists</a>
         </nav>
-        @if (!authService.currentUser()) {
-        <div class="text-center text-gray-300 p-12">
+
+        <!-- Si no hay usuario -->
+        <div *ngIf="!authService.currentUser()" class="text-center text-gray-300 p-12">
             <p class="text-xl mb-4">Inicia sesión o regístrate para ver tus favoritos y playlists</p>
             <button (click)="openLogin()"
                 class="inline-flex items-center gap-2 bg-[#c27aff] hover:bg-[#b264f2] text-white px-6 py-2 rounded-full shadow-sm transition-all duration-200 font-semibold text-sm">
@@ -19,14 +42,29 @@
                 Iniciar sesión
             </button>
         </div>
-        }
-        @else{
-        <router-outlet></router-outlet>
-        }
 
+        <!-- Contenido de rutas protegidas -->
+        <router-outlet *ngIf="authService.currentUser()"></router-outlet>
     </div>
-</div>
-<!-- Modales -->
-<app-login-modal *ngIf="showLogin" (closed)="closeModals()" (openRegisterModal)="openRegister()"></app-login-modal>
 
-<app-register-modal *ngIf="showRegister" (closed)="closeModals()"></app-register-modal>
+    <!-- Modales -->
+    <app-login-modal *ngIf="showLogin" (closed)="closeModals()" (openRegisterModal)="openRegister()"></app-login-modal>
+    <app-register-modal *ngIf="showRegister" (closed)="closeModals()"></app-register-modal>
+
+    <app-modal [visible]="showLogoutConfirm" (close)="showLogoutConfirm = false">
+        <div class="text-white text-center space-y-4">
+            <h2 class="text-xl font-semibold">¿Cerrar sesión?</h2>
+            <p class="text-sm text-gray-300">¿Estás seguro de que quieres cerrar tu sesión?</p>
+            <div class="flex justify-center gap-4 mt-6">
+                <button (click)="confirmLogout()"
+                    class="bg-[#f74f00] hover:bg-[#f72100] text-white px-4 py-2 rounded-full font-semibold transition">
+                    Sí, cerrar
+                </button>
+                <button (click)="showLogoutConfirm = false"
+                    class="bg-zinc-700 hover:bg-zinc-600 text-white px-4 py-2 rounded-full font-semibold transition">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </app-modal>
+</div>

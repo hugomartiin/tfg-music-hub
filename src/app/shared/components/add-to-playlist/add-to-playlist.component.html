@@ -1,0 +1,32 @@
+<!-- En el HTML del botón "+" dentro de tu card -->
+<div class="relative">
+    <!-- Botón que abre el menú -->
+    <button (click)="toggleDropdown()"
+        class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center hover:bg-purple-700 shadow-md z-30 relative">
+        +
+    </button>
+
+    <!-- Dropdown menú -->
+    <div *ngIf="isOpen()"
+        class="absolute bottom-10 right-0 w-64 pb-3 bg-zinc-900 border border-zinc-700 text-white rounded-lg shadow-xl z-50"
+        (clickOutside)="closeDropdown()">
+
+        <h3 class="text-sm font-semibold px-4 pt-3">Añadir a playlist</h3>
+
+        <div *ngIf="playlists().length > 0" class="px-4 py-2 space-y-1 max-h-40 overflow-y-auto text-sm">
+            <button *ngFor="let playlist of playlists()" (click)="addToPlaylist(playlist)"
+                class="w-full text-left px-2 py-1 hover:bg-zinc-800 rounded">
+                {{ playlist.name }}
+            </button>
+        </div>
+
+        <div class="border-t border-zinc-700 mt-2 pt-2 px-4">
+            <input [(ngModel)]="newPlaylistName" placeholder="Nueva playlist"
+                class="w-full px-2 py-1 rounded bg-zinc-800 border border-zinc-700 text-sm text-white mb-2" />
+
+            <button (click)="createAndAdd()" class="w-full bg-purple-600 hover:bg-purple-700 text-sm px-2 py-1 rounded">
+                Crear y añadir
+            </button>
+        </div>
+    </div>
+</div>

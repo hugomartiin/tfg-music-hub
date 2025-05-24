@@ -46,4 +46,5 @@ showRegister = false;
     this.logout();
     this.showLogoutConfirm = false;
   }
+  
 }

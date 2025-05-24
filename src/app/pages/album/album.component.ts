@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { PreviewButtonComponent } from '../../shared/components/preview-button/preview-button.component';
 import { FavoriteButtonComponent } from '../../shared/components/favorite-button/favorite-button.component';
 import { AuthService } from '../../services/auth.service';
+import { AddToPlaylistComponent } from '../../shared/components/add-to-playlist/add-to-playlist.component';
 
 @Component({
   selector: 'app-album',
   templateUrl: './album.component.html',
-  imports: [CommonModule, PreviewButtonComponent,RouterLink,FavoriteButtonComponent],
+  imports: [CommonModule, PreviewButtonComponent,RouterLink,FavoriteButtonComponent,AddToPlaylistComponent],
   standalone: true,
   providers: [AuthService]
 

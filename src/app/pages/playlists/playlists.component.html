@@ -1,1 +1,56 @@
-<p>playlists works!</p>
+<div class="min-h-screen text-white  ">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl font-extrabold mb-8 border-b border-gray-700 pb-2">Tus Playlists</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div *ngFor="let playlist of playlists"
+                class="bg-white/10 rounded-xl p-4 flex flex-col gap-4 hover:shadow-lg transition-transform duration-300 hover:scale-[1.02] relative group"
+                (click)="selectPlaylist(playlist)">
+                <button (click)="deletePlaylist(playlist, $event)"
+                    class="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition-colors z-10"
+                    title="Eliminar playlist" type="button">
+                    ✕
+                </button>
+                <div>
+                    <h3 class="text-xl font-semibold truncate">{{ playlist.name }}</h3>
+                    <p class="text-sm text-gray-400 mt-1">
+                        {{ playlist.tracks.length }} canción{{ playlist.tracks.length !== 1 ? 'es' : '' }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="selectedPlaylist" class="mt-12 max-w-4xl mx-auto">
+            <h3 class="text-3xl font-bold mb-6 border-b border-gray-700 pb-2">
+                Playlist: {{ selectedPlaylist.name }}
+            </h3>
+
+            <div *ngIf="trackDetails.length; else noTracks" class="max-h-[410px] overflow-y space-y-4">
+                <div *ngFor="let track of trackDetails; let i = index">
+                    <app-track-card [track]="track"></app-track-card>
+
+                </div>
+            </div>
+
+            <ng-template #noTracks>
+                <p class="text-gray-500 italic text-center py-6">Esta playlist no tiene canciones.</p>
+            </ng-template>
+        </div>
+    </div>
+
+    <app-modal [visible]="confirmModalVisible" (close)="cancelModal()">
+        <p class="text-white text-lg mb-6 text-center">{{ confirmModalMessage }}</p>
+        <div class="flex justify-center gap-6">
+            <button (click)="cancelModal()"
+                class="bg-gray-700 hover:bg-gray-600 text-gray-300 font-semibold rounded-lg px-6 py-2 shadow transition"
+                type="button">
+                Cancelar
+            </button>
+            <button (click)="confirmModalYes()"
+                class="bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg px-6 py-2 shadow transition"
+                type="button">
+                Confirmar
+            </button>
+        </div>
+    </app-modal>
+</div>
