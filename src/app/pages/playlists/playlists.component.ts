@@ -11,7 +11,7 @@ import { TrackCardComponent } from '../../shared/components/track-card/track-car
 @Component({
   selector: 'app-playlist',
   templateUrl: './playlists.component.html',
-  imports: [PreviewButtonComponent, CommonModule,ModalComponent,TrackCardComponent],
+  imports: [CommonModule,ModalComponent,TrackCardComponent],
   standalone: true,
 })
 export class PlaylistsComponent implements OnInit {
