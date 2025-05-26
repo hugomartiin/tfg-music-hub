@@ -1,59 +1,61 @@
 # TfgMusicHub
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.5.
+**TfgMusicHub** es una aplicación web desarrollada con **Angular 19** que permite explorar música a través de las APIs de **Deezer** y **Discogs**, escuchar previews, gestionar canciones favoritas, crear playlists y mucho más. El proyecto fue desarrollado como Trabajo de Fin de Grado del ciclo DAW.
 
-## Development server
+##  Características principales
 
-To start a local development server, run:
+-  Búsqueda de artistas, álbumes y canciones.
+-  Reproducción de previews de Deezer.
+-  Añadir canciones a favoritos.
+-  Crear y gestionar playlists personalizadas.
+-  Autenticación con Firebase (email y Google).
+-  Diseño responsive con Tailwind CSS.
+-  Inspiración visual en plataformas como Spotify.
+
+## Autor
+### Hugo Martín
+Trabajo de Fin de Grado – DAW
+Contacto: [hugomsf21@gmail.com]
+##  Requisitos previos
+
+- Node.js v18 o superior
+- Angular CLI 19.2
+- Cuenta de Firebase configurada (auth + Firestore + hosting)
+
+---
+
+## 🛠️ Instalación y ejecución
+
+1. Clona el repositorio:
 
 ```bash
+git clone https://github.com/tu-usuario/TfgMusicHub.git
+````
+2. Instala las dependencias:
+
+````bash
+
+npm install
+````
+3. Crea el archivo de entorno:
+
+Copia y pega esto en src/environments/environment.ts:
+````
+export const environment = {
+  firebase: {
+    apiKey: "TU_API_KEY",
+    authDomain: "TU_DOMINIO.firebaseapp.com",
+    projectId: "TU_PROJECT_ID",
+    storageBucket: "TU_PROJECT_ID.appspot.com",
+    messagingSenderId: "XXXXXX",
+    appId: "APP_ID"
+  }
+};
+````
+Inicia el servidor de desarrollo:
+````
 npm start
-```
+````
+Visita http://localhost:4200 en tu navegador.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
