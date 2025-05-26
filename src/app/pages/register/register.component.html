@@ -1,25 +1,70 @@
 <app-modal [visible]="true" (close)="close()">
-    <h2 class="text-2xl font-bold mb-6 text-center">Registrarse</h2>
+    <h2 class="text-2xl text-white font-bold mb-6 text-center">Registrarse</h2>
 
-    <form (ngSubmit)="register()" #registerForm="ngForm" class="flex flex-col gap-4" *ngIf="!successMsg">
-        <input type="text" name="firstName" [(ngModel)]="firstName" placeholder="Nombre" required
-            class="p-3 border rounded-md dark:bg-zinc-800 dark:text-white" [disabled]="loading" />
-        <input type="text" name="lastName" [(ngModel)]="lastName" placeholder="Apellidos" required
-            class="p-3 border rounded-md dark:bg-zinc-800 dark:text-white" [disabled]="loading" />
-        <input type="email" name="email" [(ngModel)]="email" placeholder="Correo electrónico" required
-            class="p-3 border rounded-md dark:bg-zinc-800 dark:text-white" [disabled]="loading" />
-        <input type="password" name="password" [(ngModel)]="password" placeholder="Contraseña" required minlength="6"
-            class="p-3 border rounded-md dark:bg-zinc-800 dark:text-white" [disabled]="loading" />
-        <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" placeholder="Confirmar contraseña"
-            required minlength="6" class="p-3 border rounded-md dark:bg-zinc-800 dark:text-white"
-            [disabled]="loading" />
+    <form (ngSubmit)="register()" #registerForm="ngForm" class="flex flex-col gap-4" *ngIf="!successMsg" novalidate>
+        <!-- Nombre -->
+        <div>
+            <input type="text" name="firstName" [(ngModel)]="firstName" placeholder="Nombre" required
+                class="p-3 border rounded-md dark:bg-zinc-800 dark:text-white w-full" [disabled]="loading"
+                #firstNameCtrl="ngModel" />
+            <p *ngIf="firstNameCtrl.invalid && firstNameCtrl.touched" class="text-red-500 text-sm mt-1">
+                El nombre es obligatorio.
+            </p>
+        </div>
 
+        <!-- Apellidos -->
+        <div>
+            <input type="text" name="lastName" [(ngModel)]="lastName" placeholder="Apellidos" required
+                class="p-3 border rounded-md dark:bg-zinc-800 dark:text-white w-full" [disabled]="loading"
+                #lastNameCtrl="ngModel" />
+            <p *ngIf="lastNameCtrl.invalid && lastNameCtrl.touched" class="text-red-500 text-sm mt-1">
+                Los apellidos son obligatorios.
+            </p>
+        </div>
+
+        <!-- Email -->
+        <div>
+            <input type="email" name="email" [(ngModel)]="email" placeholder="Correo electrónico" required
+                class="p-3 border rounded-md dark:bg-zinc-800 dark:text-white w-full" [disabled]="loading"
+                #emailCtrl="ngModel" />
+            <p *ngIf="emailCtrl.invalid && emailCtrl.touched" class="text-red-500 text-sm mt-1">
+                Introduce un correo válido.
+            </p>
+        </div>
+
+        <!-- Contraseña -->
+        <div>
+            <input type="password" name="password" [(ngModel)]="password" placeholder="Contraseña" required
+                minlength="6" class="p-3 border rounded-md dark:bg-zinc-800 dark:text-white w-full" [disabled]="loading"
+                #passwordCtrl="ngModel" />
+            <p *ngIf="passwordCtrl.invalid && passwordCtrl.touched" class="text-red-500 text-sm mt-1">
+                La contraseña debe tener al menos 6 caracteres.
+            </p>
+        </div>
+
+        <!-- Confirmar contraseña -->
+        <div>
+            <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword"
+                placeholder="Confirmar contraseña" required minlength="6"
+                class="p-3 border rounded-md dark:bg-zinc-800 dark:text-white w-full" [disabled]="loading"
+                #confirmPasswordCtrl="ngModel" />
+            <p *ngIf="confirmPasswordCtrl.invalid && confirmPasswordCtrl.touched" class="text-red-500 text-sm mt-1">
+                Confirma tu contraseña.
+            </p>
+            <p *ngIf="password && confirmPassword && password !== confirmPassword && confirmPasswordCtrl.touched"
+                class="text-red-500 text-sm mt-1">
+                Las contraseñas no coinciden.
+            </p>
+        </div>
+
+        <!-- Botón -->
         <button type="submit" [disabled]="registerForm.invalid || loading"
             class="bg-purple-600 text-white py-3 rounded-md hover:bg-purple-700 disabled:opacity-50">
             {{ loading ? 'Creando cuenta...' : 'Registrar' }}
         </button>
     </form>
 
-    <p *ngIf="errorMsg" class="mt-4 text-red-600 text-center">{{ errorMsg }}</p>
+    <!-- Mensajes globales -->
+    <p *ngIf="errorMsg && !successMsg" class="mt-4 text-red-600 text-center">{{ errorMsg }}</p>
     <p *ngIf="successMsg" class="mt-4 text-green-600 text-center">{{ successMsg }}</p>
 </app-modal>

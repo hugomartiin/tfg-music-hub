@@ -5,7 +5,6 @@ import { DeezerTrack } from '../../interfaces/interfaces';
 import { RouterModule } from '@angular/router';
 import { PreviewButtonComponent } from '../../shared/components/preview-button/preview-button.component';
 import { AuthService } from '../../services/auth.service';
-import { LoginModalComponent } from '../login/login.component';
 import { RegisterModalComponent } from '../register/register.component';
 import { ModalComponent } from '../../shared/components/modal/modal.component';
 import { TrackCardComponent } from '../../shared/components/track-card/track-card.component';
