@@ -121,9 +121,15 @@ export class ArtistComponent implements OnInit, OnDestroy {
     return full.length > 300 && !this.isExpanded() ? full.slice(0, 300) + '...' : full;
   }
 
-  get cleanProfile(): string {
-    return this.discogsArtist()?.profile?.replace(/\[a\d+\]/g, '') ?? '';
-  }
+get cleanProfile(): string {
+  const raw = this.discogsArtist()?.profile ?? '';
+  // Elimina etiquetas como [a=Nombre], [l=Nombre], [a1234], etc.
+  return raw
+    .replace(/\[a=[^\]]+\]/g, match => match.slice(3, -1)) // [a=Drake] -> Drake
+    .replace(/\[l=[^\]]+\]/g, match => match.slice(3, -1)) // [l=Cash Money] -> Cash Money
+    .replace(/\[(a|l)?\d+\]/g, '') // [a12345] o [l123] -> ''
+    .trim();
+}
 
   get discogsMemberNames(): string {
     return this.discogsArtist()?.members?.map((m) => m.name).join(', ') ?? '';
