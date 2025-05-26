@@ -1,4 +1,3 @@
-// discogs.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -35,7 +34,7 @@ export class DiscogsService {
       headers: this.getHeaders()
     });
   }
-  //No usado todavía
+  //Implentacion en un futuro
   getArtistReleases(id: number, page: number = 1): Observable<DiscogsArtistReleases> {
     const params = new HttpParams().set('page', page.toString()).set('per_page', '20');
       return this.http.get<DiscogsArtistReleases>(`${this.apiUrl}/artists/${id}/releases`, {
@@ -43,7 +42,7 @@ export class DiscogsService {
         params
     });
   }
-
+  //Implentacion en un futuro
 getMasterVersions(masterId: number, page: number = 1): Observable<any> {
   const params = new HttpParams().set('page', page).set('per_page', '10');
   return this.http.get<any>(`${this.apiUrl}/masters/${masterId}/versions`, {

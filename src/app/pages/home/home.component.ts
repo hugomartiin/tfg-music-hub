@@ -27,7 +27,6 @@ import { ModalComponent } from '../../shared/components/modal/modal.component';
     ButtonComponent,
     ModalComponent
   ],
-  providers: [AuthService]
 })
 export class HomeComponent {
   topResults: any[] = [];

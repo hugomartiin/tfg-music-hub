@@ -7,7 +7,6 @@ import { NgIf } from '@angular/common';
   selector: 'app-global-player',
   standalone: true,
   templateUrl: './global-player.component.html',
-  styleUrls: ['./global-player.component.css'],
   imports: [NgIf],
 })
 export class GlobalPlayerComponent {

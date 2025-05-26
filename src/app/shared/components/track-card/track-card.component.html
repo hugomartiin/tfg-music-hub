@@ -8,11 +8,11 @@
         </span>
     </div>
     @if(authService.currentUser()){
-    <app-favorite-button [track]="track"></app-favorite-button>
+    <app-favorite-button [track]="track" class="pt-2"></app-favorite-button>
     }
     @if(authService.currentUser()){
     <app-add-to-playlist [track]="track"></app-add-to-playlist>
     }
     <app-preview-button [previewUrl]="track.preview" [title]="track.title" [artist]="track.artist?.name"
-        [cover]="track.album?.cover_medium"></app-preview-button>
+        [cover]="track.album?.cover_medium" class="pr-5"></app-preview-button>
 </div>

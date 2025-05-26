@@ -48,7 +48,6 @@ export class RegisterModalComponent {
     const displayName = cred.user.displayName || cred.user.email;
     this.successMsg = `Cuenta creada con éxito. Bienvenido, ${displayName}!`;
 
-    // Limpiar campos
     this.email = '';
     this.password = '';
     this.confirmPassword = '';

@@ -13,7 +13,6 @@ import { AddToPlaylistComponent } from '../../shared/components/add-to-playlist/
   templateUrl: './album.component.html',
   imports: [CommonModule, PreviewButtonComponent,RouterLink,FavoriteButtonComponent,AddToPlaylistComponent],
   standalone: true,
-  providers: [AuthService]
 
 })
 export class AlbumComponent implements OnInit {

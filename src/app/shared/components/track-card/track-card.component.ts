@@ -15,9 +15,7 @@ import { AddToPlaylistComponent } from '../add-to-playlist/add-to-playlist.compo
     PreviewButtonComponent,
     AddToPlaylistComponent
   ],
-  providers: [AuthService],
   templateUrl: './track-card.component.html',
-  styleUrl: './track-card.component.css',
 })
 export class TrackCardComponent {
   @Input() track!: DeezerTrack;

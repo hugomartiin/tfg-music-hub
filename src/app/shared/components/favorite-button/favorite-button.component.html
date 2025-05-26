@@ -2,7 +2,6 @@
     <button (click)="toggleFavorite()" class="text-red-500 hover:text-red-700 transition"
         aria-label="Botón de favoritos">
         <ng-container *ngIf="isFavorite(); else notFav">
-            <!-- Corazón lleno -->
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
           2 5.42 4.42 3 7.5 3c1.74 0 
@@ -13,7 +12,6 @@
             </svg>
         </ng-container>
         <ng-template #notFav>
-            <!-- Corazón vacío -->
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-current" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 

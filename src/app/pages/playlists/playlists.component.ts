@@ -12,7 +12,6 @@ import { TrackCardComponent } from '../../shared/components/track-card/track-car
   selector: 'app-playlist',
   templateUrl: './playlists.component.html',
   imports: [CommonModule,ModalComponent,TrackCardComponent],
-  standalone: true,
 })
 export class PlaylistsComponent implements OnInit {
   playlists: Playlist[] = [];
@@ -28,7 +27,6 @@ export class PlaylistsComponent implements OnInit {
     this.playlistService.getPlaylists$().subscribe({
       next: playlists => {
         this.playlists = playlists;
-        // Si la playlist seleccionada fue borrada, deseleccionarla
         if (this.selectedPlaylist && !playlists.find(p => p.id === this.selectedPlaylist?.id)) {
           this.selectedPlaylist = null;
           this.trackDetails = [];
@@ -106,19 +104,16 @@ removeTrackFromPlaylist(trackIndex: number) {
   );
 }
 
-  // Nuevo estado para controlar el modal de confirmación
 confirmModalVisible = false;
 confirmModalMessage = '';
 confirmModalAction: (() => Promise<void>) | null = null;
 
-// Método para abrir modal con acción y mensaje
 openConfirmModal(message: string, action: () => Promise<void>) {
   this.confirmModalMessage = message;
   this.confirmModalAction = action;
   this.confirmModalVisible = true;
 }
 
-// Método para confirmar en modal
 async confirmModalYes() {
   if (this.confirmModalAction) {
     await this.confirmModalAction();
@@ -126,7 +121,6 @@ async confirmModalYes() {
   this.confirmModalVisible = false;
 }
 
-// Método para cancelar modal
 cancelModal() {
   this.confirmModalVisible = false;
 }
