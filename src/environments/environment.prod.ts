@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  deezerApi: 'https://us-central1-musichub-e4bab.cloudfunctions.net/proxyDeezer',
   discogsToken: 'wERLsXgsndqSTZEDWaZhKlAOhObZIPgXxsHOwTLG',
   firebase: {
     apiKey: "AIzaSyDKh6obN0FP2jUds-x6rTZygPsB3oYvRbg",

@@ -1,0 +1,7 @@
+/* Solo entre 449px y 639px */
+@media (min-width: 449px) and (max-width: 639px) {
+    main.custom-padding {
+        padding-top: 80px;
+        /* Ajusta según necesites */
+    }
+}

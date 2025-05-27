@@ -35,10 +35,11 @@
                 <div *ngFor="let track of trackDetails; let i = index" class="relative group">
                     <!-- Botón de eliminar con animación suave -->
                     <button (click)="removeTrackFromPlaylist(i)"
-                        class="absolute top-3 right-3 z-10 hover:text-red-500 transition-all duration-300 opacity-0 group-hover:opacity-100 translate-y-[-4px] group-hover:translate-y-0 p-1"
+                        class="absolute top-3 right-3 z-10 text-gray-400 hover:text-red-500 transition-colors p-1"
                         title="Quitar canción de la playlist" type="button">
                         ✕
                     </button>
+
                     <app-track-card [track]="track"></app-track-card>
                 </div>
             </div>

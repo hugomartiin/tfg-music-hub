@@ -9,19 +9,21 @@ import {
   DeezerAlbumDetail,
   DeezerTrack,
 } from '../interfaces/interfaces';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DeezerService {
-  private baseUrl = '/api';
+  private baseUrl = environment.deezerApi;
 
   constructor(private http: HttpClient) {}
 
   searchTracks(query: string): Observable<DeezerTrackSearchResponse> {
-    const encoded = encodeURIComponent(query);
     return this.http.get<DeezerTrackSearchResponse>(
-      `${this.baseUrl}/search/track?q=${encoded}`
+      `${this.baseUrl}/search/track`, {
+        params: { q: query }
+      }
     );
   }
 
@@ -30,18 +32,17 @@ export class DeezerService {
     albums: DeezerAlbumSearchResponse;
     tracks: DeezerTrackSearchResponse;
   }> {
-    const encoded = encodeURIComponent(query);
-    const searchArtists = this.http.get<DeezerArtistSearchResponse>(
-      `${this.baseUrl}/search/artist?q=${encoded}`
-    );
-    const searchAlbums = this.http.get<DeezerAlbumSearchResponse>(
-      `${this.baseUrl}/search/album?q=${encoded}`
-    );
-    const searchTracks = this.http.get<DeezerTrackSearchResponse>(
-      `${this.baseUrl}/search/track?q=${encoded}`
-    );
-
-    return forkJoin({ artists: searchArtists, albums: searchAlbums, tracks: searchTracks });
+    return forkJoin({
+      artists: this.http.get<DeezerArtistSearchResponse>(
+        `${this.baseUrl}/search/artist`, { params: { q: query } }
+      ),
+      albums: this.http.get<DeezerAlbumSearchResponse>(
+        `${this.baseUrl}/search/album`, { params: { q: query } }
+      ),
+      tracks: this.http.get<DeezerTrackSearchResponse>(
+        `${this.baseUrl}/search/track`, { params: { q: query } }
+      )
+    });
   }
 
   getArtist(id: number): Observable<DeezerArtist> {
@@ -61,12 +62,15 @@ export class DeezerService {
   }
 
   getArtistTopTracks(id: number): Observable<DeezerTrackSearchResponse> {
-    return this.http.get<DeezerTrackSearchResponse>(`${this.baseUrl}/artist/${id}/top?limit=5`);
+    return this.http.get<DeezerTrackSearchResponse>(
+      `${this.baseUrl}/artist/${id}/top`,
+      { params: { limit: 5 } }
+    );
   }
-  getTrackById(id: string): Promise<DeezerTrack> {
-  return fetch(`${this.baseUrl}/track/${id}`)
-    .then(res => res.json())
-    .catch(() => null);
-}
 
+  getTrackById(id: string): Promise<DeezerTrack> {
+    return fetch(`${this.baseUrl}/track/${id}`)
+      .then(res => res.json())
+      .catch(() => null);
+  }
 }

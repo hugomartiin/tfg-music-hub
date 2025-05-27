@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
+  deezerApi: '/api',
   discogsToken: 'wERLsXgsndqSTZEDWaZhKlAOhObZIPgXxsHOwTLG',
   firebase: {
     apiKey: "AIzaSyDKh6obN0FP2jUds-x6rTZygPsB3oYvRbg",
