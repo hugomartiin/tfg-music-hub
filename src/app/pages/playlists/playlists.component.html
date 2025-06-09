@@ -31,7 +31,7 @@
                 Playlist: {{ selectedPlaylist.name }}
             </h3>
 
-            <div *ngIf="trackDetails.length; else noTracks" class="max-h-[410px] overflow-y space-y-4">
+            <div *ngIf="trackDetails.length; else noTracks" class=" overflow-y space-y-4">
                 <div *ngFor="let track of trackDetails; let i = index" class="relative group">
                     <!-- Botón de eliminar con animación suave -->
                     <button (click)="removeTrackFromPlaylist(i)"
