@@ -64,7 +64,7 @@ export class DeezerService {
   getArtistTopTracks(id: number): Observable<DeezerTrackSearchResponse> {
     return this.http.get<DeezerTrackSearchResponse>(
       `${this.baseUrl}/artist/${id}/top`,
-      { params: { limit: 5 } }
+      { params: { limit: 6 } }
     );
   }
 

@@ -16,7 +16,7 @@ export const proxyDeezer = onRequest(async (req, res) => {
 
   try {
     const url = req.originalUrl.replace(/^\/proxyDeezer\/?/, '');
-const response = await axios.get(`https://api.deezer.com/${url}`, {
+    const response = await axios.get(`https://api.deezer.com/${url}`, {
   params: req.query
 });
 
